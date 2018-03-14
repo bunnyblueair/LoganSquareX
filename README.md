@@ -2,7 +2,7 @@
 # LoganSquareX
 ![build status](https://travis-ci.org/LoganSquareX/LoganSquareX.svg?branch=master)
 
-base on logansquare
+# fork and modify from LoganSquare(BlueLine Labs, Inc),cause LoganSquare has died
 
 The fastest JSON parsing and serializing library available for Android. Based on Jackson's streaming API, LoganSquare is able to consistently outperform GSON and Jackson's Databind library by 400% or more<sup>[1](#1)</sup>. By relying on compile-time annotation processing to generate code, you know that your JSON will parse and serialize faster than any other method available.
 
@@ -93,9 +93,11 @@ Like all libraries that generate dynamic code, Proguard might think some classes
 -keep class **$$JsonObjectMapper { *; }
 ```
 
-## Why LoganSquareX?
+## Why LoganSquare?
 
 We're BlueLine Labs, a mobile app development company based in Chicago. We love this city so much that we named our company after the blue line of the iconic 'L.' And what's one of the most popular stops on the blue line? Well, that would be Logan Square of course. Does it have anything to do with JSON? Nope, but we're okay with that.
+## Why LoganSquareX?
+LoganSquare has died，and we add some feature on this project。
 
 ## Props
 
