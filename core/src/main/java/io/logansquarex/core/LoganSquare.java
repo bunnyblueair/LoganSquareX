@@ -30,31 +30,31 @@ import java.util.concurrent.ConcurrentHashMap;
 /** The point of all interaction with this library. */
 public class LoganSquare {
 
-    private static final ListMapper LIST_MAPPER = new ListMapper();
-    private static final MapMapper MAP_MAPPER = new MapMapper();
-
-    private static final Map<Class, JsonMapper> OBJECT_MAPPERS = new ConcurrentHashMap<Class, JsonMapper>();
-    static {
-        OBJECT_MAPPERS.put(String.class, new StringMapper());
-        OBJECT_MAPPERS.put(Integer.class, new IntegerMapper());
-        OBJECT_MAPPERS.put(Long.class, new LongMapper());
-        OBJECT_MAPPERS.put(Float.class, new FloatMapper());
-        OBJECT_MAPPERS.put(Double.class, new DoubleMapper());
-        OBJECT_MAPPERS.put(Boolean.class, new BooleanMapper());
-        OBJECT_MAPPERS.put(Object.class, new ObjectMapper());
-        OBJECT_MAPPERS.put(List.class, LIST_MAPPER);
-        OBJECT_MAPPERS.put(ArrayList.class, LIST_MAPPER);
-        OBJECT_MAPPERS.put(Map.class, MAP_MAPPER);
-        OBJECT_MAPPERS.put(HashMap.class, MAP_MAPPER);
-    }
-
-    private static final ConcurrentHashMap<ParameterizedType, JsonMapper> PARAMETERIZED_OBJECT_MAPPERS = new ConcurrentHashMap<ParameterizedType, JsonMapper>();
-
-    private static final SimpleArrayMap<Class, TypeConverter> TYPE_CONVERTERS = new SimpleArrayMap<>();
-    static {
-        registerTypeConverter(Date.class, new DefaultDateConverter());
-        registerTypeConverter(Calendar.class, new DefaultCalendarConverter());
-    }
+//    private static final ListMapper LIST_MAPPER = new ListMapper();
+//    private static final MapMapper MAP_MAPPER = new MapMapper();
+//
+//    private static final Map<Class, JsonMapper> OBJECT_MAPPERS = new ConcurrentHashMap<Class, JsonMapper>();
+//    static {
+//        OBJECT_MAPPERS.put(String.class, new StringMapper());
+//        OBJECT_MAPPERS.put(Integer.class, new IntegerMapper());
+//        OBJECT_MAPPERS.put(Long.class, new LongMapper());
+//        OBJECT_MAPPERS.put(Float.class, new FloatMapper());
+//        OBJECT_MAPPERS.put(Double.class, new DoubleMapper());
+//        OBJECT_MAPPERS.put(Boolean.class, new BooleanMapper());
+//        OBJECT_MAPPERS.put(Object.class, new ObjectMapper());
+//        OBJECT_MAPPERS.put(List.class, LIST_MAPPER);
+//        OBJECT_MAPPERS.put(ArrayList.class, LIST_MAPPER);
+//        OBJECT_MAPPERS.put(Map.class, MAP_MAPPER);
+//        OBJECT_MAPPERS.put(HashMap.class, MAP_MAPPER);
+//    }
+//
+//    private static final ConcurrentHashMap<ParameterizedType, JsonMapper> PARAMETERIZED_OBJECT_MAPPERS = new ConcurrentHashMap<ParameterizedType, JsonMapper>();
+//
+//    private static final SimpleArrayMap<Class, TypeConverter> TYPE_CONVERTERS = new SimpleArrayMap<>();
+//    static {
+//        registerTypeConverter(Date.class, new DefaultDateConverter());
+//        registerTypeConverter(Calendar.class, new DefaultCalendarConverter());
+//    }
 
     /** The JsonFactory that should be used throughout the entire app. */
     public static final JsonFactory JSON_FACTORY = new JsonFactory();
@@ -227,13 +227,13 @@ public class LoganSquare {
 
     @SuppressWarnings("unchecked")
     /*package*/ static <E> JsonMapper<E> getMapper(Class<E> cls) {
-        JsonMapper<E> mapper = OBJECT_MAPPERS.get(cls);
+        JsonMapper<E> mapper = LoganSquareX.OBJECT_MAPPERS.get(cls);
         if (mapper == null) {
             // The only way the mapper wouldn't already be loaded into OBJECT_MAPPERS is if it was compiled separately, but let's handle it anyway
             try {
                 Class<?> mapperClass = Class.forName(cls.getName() + Constants.MAPPER_CLASS_SUFFIX);
                 mapper = (JsonMapper<E>)mapperClass.newInstance();
-                OBJECT_MAPPERS.put(cls, mapper);
+                LoganSquareX.OBJECT_MAPPERS.put(cls, mapper);
             } catch (Exception ignored) { }
         }
         return mapper;
@@ -251,8 +251,8 @@ public class LoganSquare {
 
         if (partialMappers.containsKey(type)) {
             return partialMappers.get(type);
-        } else if (PARAMETERIZED_OBJECT_MAPPERS.containsKey(type)) {
-            return PARAMETERIZED_OBJECT_MAPPERS.get(type);
+        } else if (LoganSquareX.PARAMETERIZED_OBJECT_MAPPERS.containsKey(type)) {
+            return LoganSquareX.PARAMETERIZED_OBJECT_MAPPERS.get(type);
         } else {
             try {
                 Class<?> mapperClass = Class.forName(type.rawType.getName() + Constants.MAPPER_CLASS_SUFFIX);
@@ -264,7 +264,7 @@ public class LoganSquare {
                     args[i + 1] = type.typeParameters.get(i);
                 }
                 JsonMapper<E> mapper = (JsonMapper<E>)constructor.newInstance(args);
-                PARAMETERIZED_OBJECT_MAPPERS.put(type, mapper);
+                LoganSquareX.PARAMETERIZED_OBJECT_MAPPERS.put(type, mapper);
                 return mapper;
             } catch (Exception ignored) {
                 return null;
@@ -333,7 +333,7 @@ public class LoganSquare {
      */
     @SuppressWarnings("unchecked")
     public static <E> TypeConverter<E> typeConverterFor(Class<E> cls) throws NoSuchTypeConverterException {
-        TypeConverter<E> typeConverter = TYPE_CONVERTERS.get(cls);
+        TypeConverter<E> typeConverter = LoganSquareX.TYPE_CONVERTERS.get(cls);
         if (typeConverter == null) {
             throw new NoSuchTypeConverterException(cls);
         }
@@ -347,6 +347,6 @@ public class LoganSquare {
      * @param converter The TypeConverter
      */
     public static <E> void registerTypeConverter(Class<E> cls, TypeConverter<E> converter) {
-        TYPE_CONVERTERS.put(cls, converter);
+        LoganSquareX.TYPE_CONVERTERS.put(cls, converter);
     }
 }

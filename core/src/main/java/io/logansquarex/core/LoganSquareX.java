@@ -23,6 +23,8 @@ import io.logansquarex.core.objectmappers.LongMapper;
 import io.logansquarex.core.objectmappers.MapMapper;
 import io.logansquarex.core.objectmappers.ObjectMapper;
 import io.logansquarex.core.objectmappers.StringMapper;
+import io.logansquarex.core.simple.SimpleListResponse;
+import io.logansquarex.core.simple.SimpleListResponse$$JsonObjectMapper;
 import io.logansquarex.core.typeconverters.DefaultCalendarConverter;
 import io.logansquarex.core.typeconverters.DefaultDateConverter;
 import io.logansquarex.core.typeconverters.TypeConverter;
@@ -34,10 +36,10 @@ import io.logansquarex.core.util.SimpleArrayMap;
  */
 public class LoganSquareX {
 
-    private static final ListMapper LIST_MAPPER = new ListMapper();
-    private static final MapMapper MAP_MAPPER = new MapMapper();
+    protected static final ListMapper LIST_MAPPER = new ListMapper();
+    protected static final MapMapper MAP_MAPPER = new MapMapper();
 
-    private static final Map<Class, JsonMapper> OBJECT_MAPPERS = new ConcurrentHashMap<Class, JsonMapper>();
+    protected static final Map<Class, JsonMapper> OBJECT_MAPPERS = new ConcurrentHashMap<Class, JsonMapper>();
     static {
         OBJECT_MAPPERS.put(String.class, new StringMapper());
         OBJECT_MAPPERS.put(Integer.class, new IntegerMapper());
@@ -50,11 +52,12 @@ public class LoganSquareX {
         OBJECT_MAPPERS.put(ArrayList.class, LIST_MAPPER);
         OBJECT_MAPPERS.put(Map.class, MAP_MAPPER);
         OBJECT_MAPPERS.put(HashMap.class, MAP_MAPPER);
+        OBJECT_MAPPERS.put(SimpleListResponse.class, new SimpleListResponse$$JsonObjectMapper());
     }
 
-    private static final ConcurrentHashMap<ParameterizedType, JsonMapper> PARAMETERIZED_OBJECT_MAPPERS = new ConcurrentHashMap<ParameterizedType, JsonMapper>();
+    protected static final ConcurrentHashMap<ParameterizedType, JsonMapper> PARAMETERIZED_OBJECT_MAPPERS = new ConcurrentHashMap<ParameterizedType, JsonMapper>();
 
-    private static final SimpleArrayMap<Class, TypeConverter> TYPE_CONVERTERS = new SimpleArrayMap<>();
+    protected static final SimpleArrayMap<Class, TypeConverter> TYPE_CONVERTERS = new SimpleArrayMap<>();
     static {
         registerTypeConverter(Date.class, new DefaultDateConverter());
         registerTypeConverter(Calendar.class, new DefaultCalendarConverter());
@@ -420,5 +423,21 @@ public class LoganSquareX {
      */
     public static <E> void registerTypeConverter(Class<E> cls, TypeConverter<E> converter) {
         TYPE_CONVERTERS.put(cls, converter);
+    }
+
+    /**
+     * list to response
+     * @param list
+     * @param <E>
+     * @return  {"code":0,"data":[{"description":"xxxxx"},{"description":"xxxxx"}]}
+     */
+    public static <E> String serializeListSimple(List<E> list) {
+
+        try {
+            SimpleListResponse$$JsonObjectMapper jsonObjectMapper= (SimpleListResponse$$JsonObjectMapper) mapperFor(SimpleListResponse.class);
+            return jsonObjectMapper.serialize(list);
+        } catch (IOException e) {
+            return null;
+        }
     }
 }

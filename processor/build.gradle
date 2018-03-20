@@ -15,8 +15,8 @@ targetCompatibility = 1.7
 ext.artifactId = 'logansquareX-compiler'
 
 dependencies {
-    compile 'org.apache.commons:commons-lang3:3.2'
-    compile 'com.squareup:javapoet:1.2.0'
+    compile 'org.apache.commons:commons-lang3:3.7'
+    compile 'com.squareup:javapoet:1.8.0'
     compile project(':core')
 
     testCompile files("${System.properties['java.home']}/../lib/tools.jar")
