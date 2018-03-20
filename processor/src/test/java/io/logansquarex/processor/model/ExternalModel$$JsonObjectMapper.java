@@ -10,10 +10,10 @@ import java.lang.String;
 import java.lang.SuppressWarnings;
 
 @SuppressWarnings("unsafe,unchecked")
-public final class ExternalModel$$JsonObjectMapper extends JsonMapper<ExternalModel> {
+public final class ExternalModel$$JsonObjectMapper extends JsonMapper<ExternalModelTest> {
   @Override
-  public ExternalModel parse(JsonParser jsonParser) throws IOException {
-    ExternalModel instance = new ExternalModel();
+  public ExternalModelTest parse(JsonParser jsonParser) throws IOException {
+    ExternalModelTest instance = new ExternalModelTest();
     if (jsonParser.getCurrentToken() == null) {
       jsonParser.nextToken();
     }
@@ -31,14 +31,14 @@ public final class ExternalModel$$JsonObjectMapper extends JsonMapper<ExternalMo
   }
 
   @Override
-  public void parseField(ExternalModel instance, String fieldName, JsonParser jsonParser) throws IOException {
+  public void parseField(ExternalModelTest instance, String fieldName, JsonParser jsonParser) throws IOException {
     if ("string".equals(fieldName)) {
       instance.string = jsonParser.getValueAsString(null);
     }
   }
 
   @Override
-  public void serialize(ExternalModel object, JsonGenerator jsonGenerator, boolean writeStartAndEnd) throws IOException {
+  public void serialize(ExternalModelTest object, JsonGenerator jsonGenerator, boolean writeStartAndEnd) throws IOException {
     if (writeStartAndEnd) {
       jsonGenerator.writeStartObject();
     }

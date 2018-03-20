@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import io.logansquarex.core.JsonMapper;
-import io.logansquarex.core.LoganSquare;
+import io.logansquarex.core.LoganSquareX;
 import java.io.IOException;
 import java.lang.Integer;
 import java.lang.Override;
@@ -24,7 +24,7 @@ import java.util.TreeMap;
 
 @SuppressWarnings("unsafe,unchecked")
 public final class SimpleCollectionModel$$JsonObjectMapper extends JsonMapper<SimpleCollectionModel> {
-    private static final JsonMapper<SimpleCollectionModel.ModelForCollection> IO_LOGANSQUAREX_PROCESSOR_SIMPLECOLLECTIONMODEL_MODELFORCOLLECTION__JSONOBJECTMAPPER = LoganSquare.mapperFor(SimpleCollectionModel.ModelForCollection.class);
+    private static final JsonMapper<SimpleCollectionModel.ModelForCollection> IO_LOGANSQUAREX_PROCESSOR_SIMPLECOLLECTIONMODEL_MODELFORCOLLECTION__JSONOBJECTMAPPER = LoganSquareX.mapperFor(SimpleCollectionModel.ModelForCollection.class);
 
     @Override
     public SimpleCollectionModel parse(JsonParser jsonParser) throws IOException {
