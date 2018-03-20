@@ -50,6 +50,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     // LoganSquare annotation processor
     if (androidBuildToolVersion() == 3) {
@@ -60,8 +61,8 @@ dependencies {
     // LoganSquare runtime library
     compile project(':core')
     // Jackson libraries for comparison
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.8.10'
-    compile 'com.fasterxml.jackson.core:jackson-annotations:2.8.0'
+    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.4'
+    compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.4'
     // GSON library for comparison
     compile 'com.google.code.gson:gson:2.8.2'
     // Moshi library for camparison
