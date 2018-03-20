@@ -18,6 +18,7 @@ public class GsonParser extends Parser {
             Response response = gson.fromJson(json, Response.class);
             return response.users.size();
         } catch (Exception e) {
+            e.printStackTrace();
             return 0;
         } finally {
             System.gc();

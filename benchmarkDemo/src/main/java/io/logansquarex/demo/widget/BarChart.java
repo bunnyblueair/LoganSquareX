@@ -102,7 +102,9 @@ public class BarChart extends View {
     }
 
     public void addTiming(int section, int column, float timing) {
-        mSections[section].columns[column].addTiming(timing);
+        mSections[section]
+                .columns[column]
+                .addTiming(timing);
         invalidate();
     }
 

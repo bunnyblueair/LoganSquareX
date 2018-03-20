@@ -1,5 +1,6 @@
 package io.logansquarex.processor.processor;
 
+import io.logansquarex.core.Constants;
 import io.logansquarex.processor.Processor;
 
 import java.io.IOException;
@@ -30,7 +31,7 @@ public class JsonAnnotationProcessor extends AbstractProcessor {
     private Filer mFiler;
     private List<Processor> mProcessors;
     private Map<String, JsonObjectHolder> mJsonObjectMap;
-
+    private boolean mLoaderWritten;
     @Override
     public synchronized void init(ProcessingEnvironment env) {
         super.init(env);
@@ -62,6 +63,22 @@ public class JsonAnnotationProcessor extends AbstractProcessor {
             for (Processor processor : mProcessors) {
                 processor.findAndParseObjects(env, mJsonObjectMap, mElementUtils, mTypeUtils);
             }
+
+            if (!mLoaderWritten) {
+                mLoaderWritten = true;
+
+                final JsonMapperLoaderInjector loaderInjector = new JsonMapperLoaderInjector(mJsonObjectMap.values());
+                try {
+                    JavaFileObject jfo = mFiler.createSourceFile(Constants.LOADER_PACKAGE_NAME + "." + Constants.LOADER_CLASS_NAME);
+                    Writer writer = jfo.openWriter();
+                    writer.write(loaderInjector.getJavaClassFile());
+                    writer.flush();
+                    writer.close();
+                } catch (IOException e) {
+                    error(Constants.LOADER_CLASS_NAME, "Exception occurred while attempting to write injector for the mapper loader. Exception message: %s", e.getMessage());
+                }
+            }
+
 
             for (Map.Entry<String, JsonObjectHolder> entry : mJsonObjectMap.entrySet()) {
                 String fqcn = entry.getKey();

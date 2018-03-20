@@ -1,7 +1,8 @@
 package io.logansquarex.processor.processor;
 
 import io.logansquarex.core.JsonMapper;
-import io.logansquarex.core.LoganSquare;
+
+import io.logansquarex.core.LoganSquareX;
 import io.logansquarex.core.ParameterizedType;
 import io.logansquarex.processor.type.Type;
 import io.logansquarex.processor.type.Type.ClassNameObjectMapper;
@@ -71,13 +72,13 @@ public class ObjectMapperInjector {
             if (mJsonObjectHolder.parentTypeParameters.size() == 0) {
                 parentMapperBuilder = FieldSpec.builder(ParameterizedTypeName.get(ClassName.get(JsonMapper.class), mJsonObjectHolder.parentTypeName), PARENT_OBJECT_MAPPER_VARIABLE_NAME)
                         .addModifiers(Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
-                        .initializer("$T.mapperFor($T.class)", LoganSquare.class, mJsonObjectHolder.parentTypeName);
+                        .initializer("$T.mapperFor($T.class)", LoganSquareX.class, mJsonObjectHolder.parentTypeName);
             } else {
                 parentMapperBuilder = FieldSpec.builder(ParameterizedTypeName.get(ClassName.get(JsonMapper.class), mJsonObjectHolder.getParameterizedParentTypeName()), PARENT_OBJECT_MAPPER_VARIABLE_NAME)
                         .addModifiers(Modifier.PRIVATE);
 
                 if (mJsonObjectHolder.typeParameters.size() == 0) {
-                    parentMapperBuilder.initializer("$T.mapperFor(new $T<$T>() { })", LoganSquare.class, ParameterizedType.class, mJsonObjectHolder.getParameterizedParentTypeName());
+                    parentMapperBuilder.initializer("$T.mapperFor(new $T<$T>() { })", LoganSquareX.class, ParameterizedType.class, mJsonObjectHolder.getParameterizedParentTypeName());
                 }
             }
 
@@ -119,7 +120,7 @@ public class ObjectMapperInjector {
                             .build());
 
                     constructorBuilder.addParameter(ClassName.get(ParameterizedType.class), typeArgumentName);
-                    constructorBuilder.addStatement("$L = $T.mapperFor($L, partialMappers)", jsonMapperVariableName, LoganSquare.class, typeArgumentName);
+                    constructorBuilder.addStatement("$L = $T.mapperFor($L, partialMappers)", jsonMapperVariableName, LoganSquareX.class, typeArgumentName);
                 }
             }
             constructorBuilder.addParameter(ParameterizedTypeName.get(ClassName.get(SimpleArrayMap.class), ClassName.get(ParameterizedType.class), ClassName.get(JsonMapper.class)), "partialMappers");
@@ -144,10 +145,10 @@ public class ObjectMapperInjector {
                         constructorBuilder.beginControlFlow("if ($L.equals(type))", typeName);
                         constructorBuilder.addStatement("$L = ($T)this", jsonMapperVariableName, JsonMapper.class);
                         constructorBuilder.nextControlFlow("else");
-                        constructorBuilder.addStatement("$L = $T.mapperFor($L, partialMappers)", jsonMapperVariableName, LoganSquare.class, typeName);
+                        constructorBuilder.addStatement("$L = $T.mapperFor($L, partialMappers)", jsonMapperVariableName, LoganSquareX.class, typeName);
                         constructorBuilder.endControlFlow();
                     } else {
-                        constructorBuilder.addStatement("$L = $T.mapperFor($L)", jsonMapperVariableName, LoganSquare.class, typeName);
+                        constructorBuilder.addStatement("$L = $T.mapperFor($L)", jsonMapperVariableName, LoganSquareX.class, typeName);
                     }
                 }
             }
@@ -155,7 +156,7 @@ public class ObjectMapperInjector {
 
         if (createdJsonMappers.size() > 0) {
             if (mJsonObjectHolder.hasParentClass()) {
-                constructorBuilder.addStatement("$L = $T.mapperFor(new $T<$T>() { })", PARENT_OBJECT_MAPPER_VARIABLE_NAME, LoganSquare.class, ParameterizedType.class, mJsonObjectHolder.getParameterizedParentTypeName());
+                constructorBuilder.addStatement("$L = $T.mapperFor(new $T<$T>() { })", PARENT_OBJECT_MAPPER_VARIABLE_NAME, LoganSquareX.class, ParameterizedType.class, mJsonObjectHolder.getParameterizedParentTypeName());
             }
             builder.addMethod(constructorBuilder.build());
         }
@@ -338,7 +339,7 @@ public class ObjectMapperInjector {
         for (ClassNameObjectMapper usedJsonObjectMapper : usedJsonObjectMappers) {
             builder.addField(FieldSpec.builder(ParameterizedTypeName.get(ClassName.get(JsonMapper.class), usedJsonObjectMapper.className), getMapperVariableName(usedJsonObjectMapper.objectMapper))
                     .addModifiers(Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
-                    .initializer("$T.mapperFor($T.class)", LoganSquare.class, usedJsonObjectMapper.className)
+                    .initializer("$T.mapperFor($T.class)", LoganSquareX.class, usedJsonObjectMapper.className)
                     .build()
             );
         }
@@ -362,7 +363,7 @@ public class ObjectMapperInjector {
                     .addModifiers(Modifier.PRIVATE, Modifier.STATIC, Modifier.FINAL)
                     .returns(ParameterizedTypeName.get(ClassName.get(TypeConverter.class), usedTypeConverter))
                     .beginControlFlow("if ($L == null)", variableName)
-                    .addStatement("$L = $T.typeConverterFor($T.class)", variableName, LoganSquare.class, usedTypeConverter)
+                    .addStatement("$L = $T.typeConverterFor($T.class)", variableName, LoganSquareX.class, usedTypeConverter)
                     .endControlFlow()
                     .addStatement("return $L", variableName)
                     .build()

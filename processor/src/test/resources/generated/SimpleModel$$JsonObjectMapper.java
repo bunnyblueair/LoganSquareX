@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import io.logansquarex.core.JsonMapper;
-import io.logansquarex.core.LoganSquare;
+import io.logansquarex.core.LoganSquareX;
 import io.logansquarex.core.typeconverters.TypeConverter;
 import java.io.IOException;
 import java.lang.Object;
@@ -19,7 +19,7 @@ import java.util.Map;
 
 @SuppressWarnings("unsafe,unchecked")
 public final class SimpleModel$$JsonObjectMapper extends JsonMapper<SimpleModel> {
-    private static final JsonMapper<Object> IO_LOGANSQUAREX_CORE_OBJECTMAPPERS_OBJECTMAPPER = LoganSquare.mapperFor(Object.class);
+    private static final JsonMapper<Object> IO_LOGANSQUAREX_CORE_OBJECTMAPPERS_OBJECTMAPPER = LoganSquareX.mapperFor(Object.class);
 
     private static TypeConverter<Date> java_util_Date_type_converter;
 
@@ -212,7 +212,7 @@ public final class SimpleModel$$JsonObjectMapper extends JsonMapper<SimpleModel>
 
     private static final TypeConverter<Date> getjava_util_Date_type_converter() {
         if (java_util_Date_type_converter == null) {
-            java_util_Date_type_converter = LoganSquare.typeConverterFor(Date.class);
+            java_util_Date_type_converter = LoganSquareX.typeConverterFor(Date.class);
         }
         return java_util_Date_type_converter;
     }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import io.logansquarex.core.JsonMapper;
-import io.logansquarex.core.LoganSquare;
+import io.logansquarex.core.LoganSquareX;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
@@ -21,7 +21,7 @@ import java.util.Set;
 
 @SuppressWarnings("unsafe,unchecked")
 public final class NestedCollectionModel$$JsonObjectMapper extends JsonMapper<NestedCollectionModel> {
-    private static final JsonMapper<NestedCollectionModel.ModelForCollection> MODEL_GOOD_NESTEDCOLLECTIONMODEL_MODELFORCOLLECTION__JSONOBJECTMAPPER = LoganSquare.mapperFor(NestedCollectionModel.ModelForCollection.class);
+    private static final JsonMapper<NestedCollectionModel.ModelForCollection> MODEL_GOOD_NESTEDCOLLECTIONMODEL_MODELFORCOLLECTION__JSONOBJECTMAPPER = LoganSquareX.mapperFor(NestedCollectionModel.ModelForCollection.class);
 
     @Override
     public NestedCollectionModel parse(JsonParser jsonParser) throws IOException {

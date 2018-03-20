@@ -17,6 +17,7 @@ public class MoshiParser extends Parser {
         try {
             return moshi.adapter(Response.class).fromJson(json).users.size();
         } catch (Exception e) {
+            e.printStackTrace();
             return 0;
         } finally {
             System.gc();

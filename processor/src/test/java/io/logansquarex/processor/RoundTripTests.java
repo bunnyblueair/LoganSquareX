@@ -1,11 +1,12 @@
 package io.logansquarex.processor;
 
 import io.logansquarex.core.LoganSquare;
+import io.logansquarex.core.LoganSquareX;
 import io.logansquarex.core.ParameterizedType;
 import io.logansquarex.processor.model.EnumListModel;
 import io.logansquarex.processor.model.EnumListModel.LsEnumTestConverter;
 import io.logansquarex.processor.model.EnumListModel.TestEnum;
-import io.logansquarex.processor.model.ExternalModel;
+import io.logansquarex.processor.model.ExternalModelTest;
 import io.logansquarex.processor.model.NestedCollectionModel;
 import io.logansquarex.processor.model.SimpleGenericModel;
 import io.logansquarex.processor.model.SimpleGenericModelWithExtends;
@@ -276,11 +277,15 @@ public class RoundTripTests {
 
         String reserialized = null;
         try {
-            ExternalModel simpleModel = LoganSquare.parse(json, ExternalModel.class);
+            ExternalModelTest simpleModel = LoganSquareX.parse(json, ExternalModelTest.class);
             reserialized = LoganSquare.serialize(simpleModel);
-        } catch (Exception ignored) { }
-
+        } catch (Exception ignored) {
+            ASSERT.withFailureMessage(ignored.getMessage());
+        }
+        System.err.println("reserialized=="+reserialized);
+        ASSERT.withFailureMessage(reserialized);
         ASSERT.that(json.equals(reserialized)).isTrue();
+
     }
 
     @Test

@@ -18,6 +18,7 @@ public class JacksonDatabindParser extends Parser {
             Response response = objectMapper.readValue(json, Response.class);
             return response.users.size();
         } catch (Exception e) {
+            e.printStackTrace();
             return 0;
         } finally {
             System.gc();

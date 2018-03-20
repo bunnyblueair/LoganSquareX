@@ -1,6 +1,7 @@
 package io.logansquarex.demo;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -68,7 +69,7 @@ public class MainActivity extends ActionBarActivity {
         mResponsesToSerialize = getResponsesToParse();
 
         mBarChart = (BarChart)findViewById(R.id.bar_chart);
-        mBarChart.setColumnTitles(new String[] {"GSON", "Jackson", "LoganSquare", "Moshi"});
+        mBarChart.setColumnTitles(new String[] {"GSON", "Jackson", "LoganSquareX", "Moshi"});
 
         findViewById(R.id.btn_parse_tests).setOnClickListener(new OnClickListener() {
             @Override
@@ -81,6 +82,12 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 performSerializeTests();
+            }
+        });
+        findViewById(R.id.btnNext).setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this,TextActivity.class));
             }
         });
     }
@@ -131,6 +138,7 @@ public class MainActivity extends ActionBarActivity {
 
     private void addBarData(Parser parser, ParseResult parseResult) {
         int section;
+
         switch (parseResult.objectsParsed) {
             case 60:
                 section = 0;
@@ -146,6 +154,7 @@ public class MainActivity extends ActionBarActivity {
                 break;
             default:
                 section = -1;
+                Thread.dumpStack();
                 break;
         }
 

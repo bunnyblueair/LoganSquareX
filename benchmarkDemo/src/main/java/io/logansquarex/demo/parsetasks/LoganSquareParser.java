@@ -15,6 +15,7 @@ public class LoganSquareParser extends Parser {
             Response response = LoganSquare.parse(json, Response.class);
             return response.users.size();
         } catch (Exception e) {
+            e.printStackTrace();
             return 0;
         } finally {
             System.gc();
