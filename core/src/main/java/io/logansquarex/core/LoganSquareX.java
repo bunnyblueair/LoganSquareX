@@ -24,7 +24,7 @@ import io.logansquarex.core.objectmappers.MapMapper;
 import io.logansquarex.core.objectmappers.ObjectMapper;
 import io.logansquarex.core.objectmappers.StringMapper;
 import io.logansquarex.core.simple.SimpleListResponse;
-import io.logansquarex.core.simple.SimpleListResponse$$JsonObjectMapper;
+import io.logansquarex.core.simple.SimpleListResponseMapper;
 import io.logansquarex.core.typeconverters.DefaultCalendarConverter;
 import io.logansquarex.core.typeconverters.DefaultDateConverter;
 import io.logansquarex.core.typeconverters.TypeConverter;
@@ -52,7 +52,7 @@ public class LoganSquareX {
         OBJECT_MAPPERS.put(ArrayList.class, LIST_MAPPER);
         OBJECT_MAPPERS.put(Map.class, MAP_MAPPER);
         OBJECT_MAPPERS.put(HashMap.class, MAP_MAPPER);
-        OBJECT_MAPPERS.put(SimpleListResponse.class, new SimpleListResponse$$JsonObjectMapper());
+        OBJECT_MAPPERS.put(SimpleListResponse.class, new SimpleListResponseMapper());
     }
 
     protected static final ConcurrentHashMap<ParameterizedType, JsonMapper> PARAMETERIZED_OBJECT_MAPPERS = new ConcurrentHashMap<ParameterizedType, JsonMapper>();
@@ -434,7 +434,7 @@ public class LoganSquareX {
     public static <E> String serializeListSimple(List<E> list) {
 
         try {
-            SimpleListResponse$$JsonObjectMapper jsonObjectMapper= (SimpleListResponse$$JsonObjectMapper) mapperFor(SimpleListResponse.class);
+            SimpleListResponseMapper jsonObjectMapper= (SimpleListResponseMapper) mapperFor(SimpleListResponse.class);
             return jsonObjectMapper.serialize(list);
         } catch (IOException e) {
             return null;
