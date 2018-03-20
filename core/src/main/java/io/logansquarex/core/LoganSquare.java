@@ -1,33 +1,22 @@
 package io.logansquarex.core;
 
-import io.logansquarex.core.objectmappers.BooleanMapper;
-import io.logansquarex.core.objectmappers.DoubleMapper;
-import io.logansquarex.core.objectmappers.FloatMapper;
-import io.logansquarex.core.objectmappers.IntegerMapper;
-import io.logansquarex.core.objectmappers.ListMapper;
-import io.logansquarex.core.objectmappers.LongMapper;
-import io.logansquarex.core.objectmappers.MapMapper;
-import io.logansquarex.core.objectmappers.ObjectMapper;
-import io.logansquarex.core.objectmappers.StringMapper;
-import io.logansquarex.core.typeconverters.DefaultCalendarConverter;
-import io.logansquarex.core.typeconverters.DefaultDateConverter;
-import io.logansquarex.core.typeconverters.TypeConverter;
-import io.logansquarex.core.util.SimpleArrayMap;
+
 import com.fasterxml.jackson.core.JsonFactory;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.lang.reflect.Constructor;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
-/** The point of all interaction with this library. */
+import io.logansquarex.core.typeconverters.TypeConverter;
+import io.logansquarex.core.util.SimpleArrayMap;
+
+
+/**
+ * The point of all interaction with this library.
+ */
 public class LoganSquare {
 
 //    private static final ListMapper LIST_MAPPER = new ListMapper();
@@ -56,13 +45,15 @@ public class LoganSquare {
 //        registerTypeConverter(Calendar.class, new DefaultCalendarConverter());
 //    }
 
-    /** The JsonFactory that should be used throughout the entire app. */
+    /**
+     * The JsonFactory that should be used throughout the entire app.
+     */
     public static final JsonFactory JSON_FACTORY = new JsonFactory();
 
     /**
      * Parse an object from an InputStream.
      *
-     * @param is The InputStream, most likely from your networking library.
+     * @param is              The InputStream, most likely from your networking library.
      * @param jsonObjectClass The @JsonObject class to parse the InputStream into
      */
     public static <E> E parse(InputStream is, Class<E> jsonObjectClass) throws IOException {
@@ -72,7 +63,7 @@ public class LoganSquare {
     /**
      * Parse an object from a String. Note: parsing from an InputStream should be preferred over parsing from a String if possible.
      *
-     * @param jsonString The JSON string being parsed.
+     * @param jsonString      The JSON string being parsed.
      * @param jsonObjectClass The @JsonObject class to parse the InputStream into
      */
     public static <E> E parse(String jsonString, Class<E> jsonObjectClass) throws IOException {
@@ -82,7 +73,7 @@ public class LoganSquare {
     /**
      * Parse a parameterized object from an InputStream.
      *
-     * @param is The InputStream, most likely from your networking library.
+     * @param is             The InputStream, most likely from your networking library.
      * @param jsonObjectType The ParameterizedType describing the object. Ex: LoganSquare.parse(is, new ParameterizedType&lt;MyModel&lt;OtherModel&gt;&gt;() { });
      */
     public static <E> E parse(InputStream is, ParameterizedType<E> jsonObjectType) throws IOException {
@@ -92,7 +83,7 @@ public class LoganSquare {
     /**
      * Parse a parameterized object from a String. Note: parsing from an InputStream should be preferred over parsing from a String if possible.
      *
-     * @param jsonString The JSON string being parsed.
+     * @param jsonString     The JSON string being parsed.
      * @param jsonObjectType The ParameterizedType describing the object. Ex: LoganSquare.parse(is, new ParameterizedType&lt;MyModel&lt;OtherModel&gt;&gt;() { });
      */
     public static <E> E parse(String jsonString, ParameterizedType<E> jsonObjectType) throws IOException {
@@ -102,7 +93,7 @@ public class LoganSquare {
     /**
      * Parse a list of objects from an InputStream.
      *
-     * @param is The inputStream, most likely from your networking library.
+     * @param is              The inputStream, most likely from your networking library.
      * @param jsonObjectClass The @JsonObject class to parse the InputStream into
      */
     public static <E> List<E> parseList(InputStream is, Class<E> jsonObjectClass) throws IOException {
@@ -112,7 +103,7 @@ public class LoganSquare {
     /**
      * Parse a list of objects from a String. Note: parsing from an InputStream should be preferred over parsing from a String if possible.
      *
-     * @param jsonString The JSON string being parsed.
+     * @param jsonString      The JSON string being parsed.
      * @param jsonObjectClass The @JsonObject class to parse the InputStream into
      */
     public static <E> List<E> parseList(String jsonString, Class<E> jsonObjectClass) throws IOException {
@@ -122,7 +113,7 @@ public class LoganSquare {
     /**
      * Parse a map of objects from an InputStream.
      *
-     * @param is The inputStream, most likely from your networking library.
+     * @param is              The inputStream, most likely from your networking library.
      * @param jsonObjectClass The @JsonObject class to parse the InputStream into
      */
     public static <E> Map<String, E> parseMap(InputStream is, Class<E> jsonObjectClass) throws IOException {
@@ -132,7 +123,7 @@ public class LoganSquare {
     /**
      * Parse a map of objects from a String. Note: parsing from an InputStream should be preferred over parsing from a String if possible.
      *
-     * @param jsonString The JSON string being parsed.
+     * @param jsonString      The JSON string being parsed.
      * @param jsonObjectClass The @JsonObject class to parse the InputStream into
      */
     public static <E> Map<String, E> parseMap(String jsonString, Class<E> jsonObjectClass) throws IOException {
@@ -146,24 +137,24 @@ public class LoganSquare {
      */
     @SuppressWarnings("unchecked")
     public static <E> String serialize(E object) throws IOException {
-        return mapperFor((Class<E>)object.getClass()).serialize(object);
+        return mapperFor((Class<E>) object.getClass()).serialize(object);
     }
 
     /**
      * Serialize an object to an OutputStream.
      *
      * @param object The object to serialize.
-     * @param os The OutputStream being written to.
+     * @param os     The OutputStream being written to.
      */
     @SuppressWarnings("unchecked")
     public static <E> void serialize(E object, OutputStream os) throws IOException {
-        mapperFor((Class<E>)object.getClass()).serialize(object, os);
+        mapperFor((Class<E>) object.getClass()).serialize(object, os);
     }
 
     /**
      * Serialize a parameterized object to a JSON String.
      *
-     * @param object The object to serialize.
+     * @param object            The object to serialize.
      * @param parameterizedType The ParameterizedType describing the object. Ex: LoganSquare.serialize(object, new ParameterizedType&lt;MyModel&lt;OtherModel&gt;&gt;() { });
      */
     @SuppressWarnings("unchecked")
@@ -174,9 +165,9 @@ public class LoganSquare {
     /**
      * Serialize a parameterized  object to an OutputStream.
      *
-     * @param object The object to serialize.
+     * @param object            The object to serialize.
      * @param parameterizedType The ParameterizedType describing the object. Ex: LoganSquare.serialize(object, new ParameterizedType&lt;MyModel&lt;OtherModel&gt;&gt;() { }, os);
-     * @param os The OutputStream being written to.
+     * @param os                The OutputStream being written to.
      */
     @SuppressWarnings("unchecked")
     public static <E> void serialize(E object, ParameterizedType<E> parameterizedType, OutputStream os) throws IOException {
@@ -186,7 +177,7 @@ public class LoganSquare {
     /**
      * Serialize a list of objects to a JSON String.
      *
-     * @param list The list of objects to serialize.
+     * @param list            The list of objects to serialize.
      * @param jsonObjectClass The @JsonObject class of the list elements
      */
     public static <E> String serialize(List<E> list, Class<E> jsonObjectClass) throws IOException {
@@ -196,8 +187,8 @@ public class LoganSquare {
     /**
      * Serialize a list of objects to an OutputStream.
      *
-     * @param list The list of objects to serialize.
-     * @param os The OutputStream to which the list should be serialized
+     * @param list            The list of objects to serialize.
+     * @param os              The OutputStream to which the list should be serialized
      * @param jsonObjectClass The @JsonObject class of the list elements
      */
     public static <E> void serialize(List<E> list, OutputStream os, Class<E> jsonObjectClass) throws IOException {
@@ -207,7 +198,7 @@ public class LoganSquare {
     /**
      * Serialize a map of objects to a JSON String.
      *
-     * @param map The map of objects to serialize.
+     * @param map             The map of objects to serialize.
      * @param jsonObjectClass The @JsonObject class of the list elements
      */
     public static <E> String serialize(Map<String, E> map, Class<E> jsonObjectClass) throws IOException {
@@ -217,8 +208,8 @@ public class LoganSquare {
     /**
      * Serialize a map of objects to an OutputStream.
      *
-     * @param map The map of objects to serialize.
-     * @param os The OutputStream to which the list should be serialized
+     * @param map             The map of objects to serialize.
+     * @param os              The OutputStream to which the list should be serialized
      * @param jsonObjectClass The @JsonObject class of the list elements
      */
     public static <E> void serialize(Map<String, E> map, OutputStream os, Class<E> jsonObjectClass) throws IOException {
@@ -226,23 +217,17 @@ public class LoganSquare {
     }
 
     @SuppressWarnings("unchecked")
+    @Deprecated
     /*package*/ static <E> JsonMapper<E> getMapper(Class<E> cls) {
-        JsonMapper<E> mapper = LoganSquareX.OBJECT_MAPPERS.get(cls);
-        if (mapper == null) {
-            // The only way the mapper wouldn't already be loaded into OBJECT_MAPPERS is if it was compiled separately, but let's handle it anyway
-            try {
-                Class<?> mapperClass = Class.forName(cls.getName() + Constants.MAPPER_CLASS_SUFFIX);
-                mapper = (JsonMapper<E>)mapperClass.newInstance();
-                LoganSquareX.OBJECT_MAPPERS.put(cls, mapper);
-            } catch (Exception ignored) { }
-        }
+        JsonMapper<E> mapper = LoganSquareX.getMapper(cls);
+
         return mapper;
     }
 
     @SuppressWarnings("unchecked")
     private static <E> JsonMapper<E> getMapper(ParameterizedType<E> type, SimpleArrayMap<ParameterizedType, JsonMapper> partialMappers) {
         if (type.typeParameters.size() == 0) {
-            return getMapper((Class<E>)type.rawType);
+            return getMapper((Class<E>) type.rawType);
         }
 
         if (partialMappers == null) {
@@ -263,7 +248,7 @@ public class LoganSquare {
                 for (int i = 0; i < type.typeParameters.size(); i++) {
                     args[i + 1] = type.typeParameters.get(i);
                 }
-                JsonMapper<E> mapper = (JsonMapper<E>)constructor.newInstance(args);
+                JsonMapper<E> mapper = (JsonMapper<E>) constructor.newInstance(args);
                 LoganSquareX.PARAMETERIZED_OBJECT_MAPPERS.put(type, mapper);
                 return mapper;
             } catch (Exception ignored) {
@@ -343,7 +328,7 @@ public class LoganSquare {
     /**
      * Register a new TypeConverter for parsing and serialization.
      *
-     * @param cls The class for which the TypeConverter should be used.
+     * @param cls       The class for which the TypeConverter should be used.
      * @param converter The TypeConverter
      */
     public static <E> void registerTypeConverter(Class<E> cls, TypeConverter<E> converter) {

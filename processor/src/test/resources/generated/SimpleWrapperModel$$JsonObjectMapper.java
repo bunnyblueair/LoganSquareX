@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import io.logansquarex.core.JsonMapper;
-import io.logansquarex.core.LoganSquare;
+import io.logansquarex.core.LoganSquareX;
 import java.io.IOException;
 import java.lang.Override;
 import java.lang.String;
@@ -12,7 +12,7 @@ import java.lang.SuppressWarnings;
 
 @SuppressWarnings("unsafe,unchecked")
 public final class SimpleWrapperModel$$JsonObjectMapper extends JsonMapper<SimpleWrapperModel> {
-    private static final JsonMapper<SimpleWrapperModel.WrappedClass> IO_LOGANSQUAREX_PROCESSOR_SIMPLEWRAPPERMODEL_WRAPPEDCLASS__JSONOBJECTMAPPER = LoganSquare.mapperFor(SimpleWrapperModel.WrappedClass.class);
+    private static final JsonMapper<SimpleWrapperModel.WrappedClass> IO_LOGANSQUAREX_PROCESSOR_SIMPLEWRAPPERMODEL_WRAPPEDCLASS__JSONOBJECTMAPPER = LoganSquareX.mapperFor(SimpleWrapperModel.WrappedClass.class);
 
     @Override
     public SimpleWrapperModel parse(JsonParser jsonParser) throws IOException {

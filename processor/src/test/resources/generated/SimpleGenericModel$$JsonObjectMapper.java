@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonToken;
 import io.logansquarex.core.JsonMapper;
-import io.logansquarex.core.LoganSquare;
+import io.logansquarex.core.LoganSquareX;
 import io.logansquarex.core.ParameterizedType;
 import io.logansquarex.core.typeconverters.TypeConverter;
 import io.logansquarex.core.util.SimpleArrayMap;
@@ -22,7 +22,7 @@ public final class SimpleGenericModel$$JsonObjectMapper<T> extends JsonMapper<Si
 
   public SimpleGenericModel$$JsonObjectMapper(ParameterizedType type, ParameterizedType TType, SimpleArrayMap<ParameterizedType, JsonMapper> partialMappers) {
     partialMappers.put(type, this);
-    m84ClassJsonMapper = LoganSquare.mapperFor(TType, partialMappers);
+    m84ClassJsonMapper = LoganSquareX.mapperFor(TType, partialMappers);
   }
 
   @Override
@@ -114,7 +114,7 @@ public final class SimpleGenericModel$$JsonObjectMapper<T> extends JsonMapper<Si
 
   private static final TypeConverter<Date> getjava_util_Date_type_converter() {
     if (java_util_Date_type_converter == null) {
-      java_util_Date_type_converter = LoganSquare.typeConverterFor(Date.class);
+      java_util_Date_type_converter = LoganSquareX.typeConverterFor(Date.class);
     }
     return java_util_Date_type_converter;
   }
