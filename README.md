@@ -39,8 +39,8 @@ To add the library to your app's build.gradle file.
 If your Gradle plugin version is higher than 2.3.
 ```groovy
 dependencies {
-    annotationProcessor 'io.logansquarex:logansquareX-compiler:1.3.7'
-    compile 'io.logansquarex:logansquareX:1.3.7'
+    annotationProcessor 'io.logansquarex:logansquareX-compiler:2.0.0'
+    compile 'io.logansquarex:logansquareX:2.0.0'
 }
 ```
 
@@ -55,8 +55,8 @@ buildscript {
 apply plugin: 'com.neenbedankt.android-apt'
 
 dependencies {
-    apt 'io.logansquarex:logansquareX-compiler:1.3.7'
-    compile 'io.logansquarex:logansquareX:1.3.7'
+    apt 'io.logansquarex:logansquareX-compiler:2.0.0'
+    compile 'io.logansquarex:logansquareX:2.0.0'
 }
 ```
 
@@ -65,7 +65,7 @@ dependencies {
 <dependency>
        <groupId>io.logansquarex</groupId>
        <artifactId>logansquareX</artifactId>
-       <version>1.3.7</version>
+       <version>2.0.0</version>
        <type>pom</type>
      </dependency>
 ```
@@ -88,9 +88,7 @@ When using in Spring need to validate @Configuration classes,Specifically refer 
 Like all libraries that generate dynamic code, Proguard might think some classes are unused and remove them. To prevent this, the following lines can be added to your proguard config file.
 
 ```
--keep class io.logansquarex.core.** { *; }
--keep @io.logansquarex.core.annotation.JsonObject class *
--keep class **$$JsonObjectMapper { *; }
+//nothing need keep
 ```
 
 ## Why LoganSquareX?
