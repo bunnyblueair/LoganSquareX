@@ -35,6 +35,6 @@ public class SimpleWrapperModelTest {
                 .processedWith(new JsonAnnotationProcessor())
                 .compilesWithoutError()
                 .and()
-                .generatesSources(JavaFileObjects.forResource("generated/SimpleWrapperModel$$JsonObjectMapper.java"));
+                .generatesSources(JavaFileObjects.forResource("generated/SimpleWrapperModel$$X.java"));
     }
 }

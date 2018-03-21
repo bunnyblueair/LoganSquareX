@@ -35,6 +35,6 @@ public class AbstractParentTest {
                 .processedWith(new JsonAnnotationProcessor())
                 .compilesWithoutError()
                 .and()
-                .generatesSources(JavaFileObjects.forResource("generated/AbstractParentModel$$JsonObjectMapper.java"));
+                .generatesSources(JavaFileObjects.forResource("generated/AbstractParentModel$$X.java"));
     }
 }

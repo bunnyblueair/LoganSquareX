@@ -35,6 +35,6 @@ public class DateModelTest {
                 .processedWith(new JsonAnnotationProcessor())
                 .compilesWithoutError()
                 .and()
-                .generatesSources(JavaFileObjects.forResource("generated/DateModel$$JsonObjectMapper.java"));
+                .generatesSources(JavaFileObjects.forResource("generated/DateModel$$X.java"));
     }
 }

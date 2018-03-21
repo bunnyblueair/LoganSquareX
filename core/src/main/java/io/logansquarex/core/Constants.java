@@ -21,7 +21,7 @@ package io.logansquarex.core;
 public class Constants {
 
     /** The suffix that will be added to all generated classes */
-    public static final String MAPPER_CLASS_SUFFIX = "$$JsonObjectMapper";
+    public static final String MAPPER_CLASS_SUFFIX = "$$X";
     /** The generated JsonMapper loader class's package */
     public static final String LOADER_PACKAGE_NAME = "io.logansquarex";
 

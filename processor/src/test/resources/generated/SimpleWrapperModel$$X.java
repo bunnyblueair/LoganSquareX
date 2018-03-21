@@ -11,8 +11,8 @@ import java.lang.String;
 import java.lang.SuppressWarnings;
 
 @SuppressWarnings("unsafe,unchecked")
-public final class SimpleWrapperModel$$JsonObjectMapper extends JsonMapper<SimpleWrapperModel> {
-    private static final JsonMapper<SimpleWrapperModel.WrappedClass> IO_LOGANSQUAREX_PROCESSOR_SIMPLEWRAPPERMODEL_WRAPPEDCLASS__JSONOBJECTMAPPER = LoganSquareX.mapperFor(SimpleWrapperModel.WrappedClass.class);
+public final class SimpleWrapperModel$$X extends JsonMapper<SimpleWrapperModel> {
+    private static final JsonMapper<SimpleWrapperModel.WrappedClass> IO_LOGANSQUAREX_PROCESSOR_SIMPLEWRAPPERMODEL_WRAPPEDCLASS__X = LoganSquareX.mapperFor(SimpleWrapperModel.WrappedClass.class);
 
     @Override
     public SimpleWrapperModel parse(JsonParser jsonParser) throws IOException {
@@ -36,7 +36,7 @@ public final class SimpleWrapperModel$$JsonObjectMapper extends JsonMapper<Simpl
     @Override
     public void parseField(SimpleWrapperModel instance, String fieldName, JsonParser jsonParser) throws IOException {
         if ("wrappedObject".equals(fieldName)) {
-            instance.wrappedObject = IO_LOGANSQUAREX_PROCESSOR_SIMPLEWRAPPERMODEL_WRAPPEDCLASS__JSONOBJECTMAPPER.parse(jsonParser);
+            instance.wrappedObject = IO_LOGANSQUAREX_PROCESSOR_SIMPLEWRAPPERMODEL_WRAPPEDCLASS__X.parse(jsonParser);
         }
     }
 
@@ -47,7 +47,7 @@ public final class SimpleWrapperModel$$JsonObjectMapper extends JsonMapper<Simpl
         }
         if (object.wrappedObject != null) {
             jsonGenerator.writeFieldName("wrappedObject");
-            IO_LOGANSQUAREX_PROCESSOR_SIMPLEWRAPPERMODEL_WRAPPEDCLASS__JSONOBJECTMAPPER.serialize(object.wrappedObject, jsonGenerator, true);
+            IO_LOGANSQUAREX_PROCESSOR_SIMPLEWRAPPERMODEL_WRAPPEDCLASS__X.serialize(object.wrappedObject, jsonGenerator, true);
         }
         if (writeStartAndEnd) {
             jsonGenerator.writeEndObject();

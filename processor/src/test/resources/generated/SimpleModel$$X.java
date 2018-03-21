@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("unsafe,unchecked")
-public final class SimpleModel$$JsonObjectMapper extends JsonMapper<SimpleModel> {
+public final class SimpleModel$$X extends JsonMapper<SimpleModel> {
     private static final JsonMapper<Object> IO_LOGANSQUAREX_CORE_OBJECTMAPPERS_OBJECTMAPPER = LoganSquareX.mapperFor(Object.class);
 
     private static TypeConverter<Date> java_util_Date_type_converter;

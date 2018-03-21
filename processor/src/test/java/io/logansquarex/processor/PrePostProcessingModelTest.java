@@ -35,6 +35,6 @@ public class PrePostProcessingModelTest {
                 .processedWith(new JsonAnnotationProcessor())
                 .compilesWithoutError()
                 .and()
-                .generatesSources(JavaFileObjects.forResource("generated/PrePostProcessingModel$$JsonObjectMapper.java"));
+                .generatesSources(JavaFileObjects.forResource("generated/PrePostProcessingModel$$X.java"));
     }
 }

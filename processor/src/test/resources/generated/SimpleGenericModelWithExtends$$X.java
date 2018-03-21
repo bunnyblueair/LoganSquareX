@@ -15,19 +15,19 @@ import java.lang.SuppressWarnings;
 import java.util.Date;
 
 @SuppressWarnings("unsafe,unchecked")
-public final class SimpleGenericModel$$JsonObjectMapper<T> extends JsonMapper<SimpleGenericModel<T>> {
+public final class SimpleGenericModelWithExtends$$X<T extends String> extends JsonMapper<SimpleGenericModelWithExtends<T>> {
   private static TypeConverter<Date> java_util_Date_type_converter;
 
   private final JsonMapper<T> m84ClassJsonMapper;
 
-  public SimpleGenericModel$$JsonObjectMapper(ParameterizedType type, ParameterizedType TType, SimpleArrayMap<ParameterizedType, JsonMapper> partialMappers) {
+  public SimpleGenericModelWithExtends$$X(ParameterizedType type, ParameterizedType TType, SimpleArrayMap<ParameterizedType, JsonMapper> partialMappers) {
     partialMappers.put(type, this);
     m84ClassJsonMapper = LoganSquareX.mapperFor(TType, partialMappers);
   }
 
   @Override
-  public SimpleGenericModel<T> parse(JsonParser jsonParser) throws IOException {
-    SimpleGenericModel<T> instance = new SimpleGenericModel<T>();
+  public SimpleGenericModelWithExtends<T> parse(JsonParser jsonParser) throws IOException {
+    SimpleGenericModelWithExtends<T> instance = new SimpleGenericModelWithExtends<T>();
     if (jsonParser.getCurrentToken() == null) {
       jsonParser.nextToken();
     }
@@ -45,7 +45,7 @@ public final class SimpleGenericModel$$JsonObjectMapper<T> extends JsonMapper<Si
   }
 
   @Override
-  public void parseField(SimpleGenericModel<T> instance, String fieldName, JsonParser jsonParser) throws IOException {
+  public void parseField(SimpleGenericModelWithExtends<T> instance, String fieldName, JsonParser jsonParser) throws IOException {
     if ("date".equals(fieldName)) {
       instance.date = getjava_util_Date_type_converter().parse(jsonParser);
     } else if ("string".equals(fieldName)) {
@@ -74,7 +74,7 @@ public final class SimpleGenericModel$$JsonObjectMapper<T> extends JsonMapper<Si
   }
 
   @Override
-  public void serialize(SimpleGenericModel<T> object, JsonGenerator jsonGenerator, boolean writeStartAndEnd) throws IOException {
+  public void serialize(SimpleGenericModelWithExtends<T> object, JsonGenerator jsonGenerator, boolean writeStartAndEnd) throws IOException {
     if (writeStartAndEnd) {
       jsonGenerator.writeStartObject();
     }

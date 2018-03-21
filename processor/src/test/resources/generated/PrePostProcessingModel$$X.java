@@ -10,10 +10,10 @@ import java.lang.String;
 import java.lang.SuppressWarnings;
 
 @SuppressWarnings("unsafe,unchecked")
-public final class ParentModel$$JsonObjectMapper extends JsonMapper<ParentModel> {
+public final class PrePostProcessingModel$$X extends JsonMapper<PrePostProcessingModel> {
     @Override
-    public ParentModel parse(JsonParser jsonParser) throws IOException {
-        ParentModel instance = new ParentModel();
+    public PrePostProcessingModel parse(JsonParser jsonParser) throws IOException {
+        PrePostProcessingModel instance = new PrePostProcessingModel();
         if (jsonParser.getCurrentToken() == null) {
             jsonParser.nextToken();
         }
@@ -27,22 +27,26 @@ public final class ParentModel$$JsonObjectMapper extends JsonMapper<ParentModel>
             parseField(instance, fieldName, jsonParser);
             jsonParser.skipChildren();
         }
+        instance.onParseComplete();
         return instance;
     }
 
     @Override
-    public void parseField(ParentModel instance, String fieldName, JsonParser jsonParser) throws IOException {
-        if ("parentTestInt".equals(fieldName)) {
-            instance.parentTestInt = jsonParser.getValueAsInt();
+    public void parseField(PrePostProcessingModel instance, String fieldName, JsonParser jsonParser) throws IOException {
+        if ("unformatted_string".equals(fieldName)) {
+            instance.unformattedString = jsonParser.getValueAsString(null);
         }
     }
 
     @Override
-    public void serialize(ParentModel object, JsonGenerator jsonGenerator, boolean writeStartAndEnd) throws IOException {
+    public void serialize(PrePostProcessingModel object, JsonGenerator jsonGenerator, boolean writeStartAndEnd) throws IOException {
+        object.onPreSerialize();
         if (writeStartAndEnd) {
             jsonGenerator.writeStartObject();
         }
-        jsonGenerator.writeNumberField("parentTestInt", object.parentTestInt);
+        if (object.unformattedString != null) {
+            jsonGenerator.writeStringField("unformatted_string", object.unformattedString);
+        }
         if (writeStartAndEnd) {
             jsonGenerator.writeEndObject();
         }

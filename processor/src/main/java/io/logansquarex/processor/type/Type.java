@@ -64,7 +64,7 @@ public abstract class Type {
 
             if (type == null) {
                 if (typeMirror.toString().contains("?")) {
-                    throw new RuntimeException("Generic types with wildcards are currently not supported by LoganSquare.");
+                    throw new RuntimeException("Generic types with wildcards are currently not supported by LoganSquareX.");
                 }
                 try {
                     type = new ParameterizedTypeField(TypeName.get(typeMirror));

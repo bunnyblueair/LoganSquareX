@@ -9,7 +9,7 @@ import java.lang.String;
 import java.lang.SuppressWarnings;
 
 @SuppressWarnings("unsafe,unchecked")
-public final class DateModel$$JsonObjectMapper extends JsonMapper<DateModel> {
+public final class DateModel$$X extends JsonMapper<DateModel> {
     protected static final DateModel.MyDateTypeConverter IO_LOGANSQUAREX_PROCESSOR_DATEMODEL_MYDATETYPECONVERTER = new DateModel.MyDateTypeConverter();
 
     @Override

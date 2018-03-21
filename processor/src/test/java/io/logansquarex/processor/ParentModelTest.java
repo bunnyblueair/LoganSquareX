@@ -35,6 +35,6 @@ public class ParentModelTest {
                 .processedWith(new JsonAnnotationProcessor())
                 .compilesWithoutError()
                 .and()
-                .generatesSources(JavaFileObjects.forResource("generated/ParentModel$$JsonObjectMapper.java"));
+                .generatesSources(JavaFileObjects.forResource("generated/ParentModel$$X.java"));
     }
 }

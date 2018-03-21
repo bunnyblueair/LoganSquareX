@@ -10,7 +10,7 @@ import java.lang.String;
 import java.lang.SuppressWarnings;
 
 @SuppressWarnings("unsafe,unchecked")
-public final class MultipleFieldNamesModel$$JsonObjectMapper extends JsonMapper<MultipleFieldNamesModel> {
+public final class MultipleFieldNamesModel$$X extends JsonMapper<MultipleFieldNamesModel> {
     @Override
     public MultipleFieldNamesModel parse(JsonParser jsonParser) throws IOException {
         MultipleFieldNamesModel instance = new MultipleFieldNamesModel();

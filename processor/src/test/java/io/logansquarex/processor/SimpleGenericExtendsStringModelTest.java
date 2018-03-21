@@ -36,6 +36,6 @@ public class SimpleGenericExtendsStringModelTest {
                 .processedWith(new JsonAnnotationProcessor())
                 .compilesWithoutError()
                 .and()
-                .generatesSources(JavaFileObjects.forResource("generated/SimpleGenericModelWithExtends$$JsonObjectMapper.java"));
+                .generatesSources(JavaFileObjects.forResource("generated/SimpleGenericModelWithExtends$$X.java"));
     }
 }

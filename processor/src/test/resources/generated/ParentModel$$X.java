@@ -10,10 +10,10 @@ import java.lang.String;
 import java.lang.SuppressWarnings;
 
 @SuppressWarnings("unsafe,unchecked")
-public final class PrePostProcessingModel$$JsonObjectMapper extends JsonMapper<PrePostProcessingModel> {
+public final class ParentModel$$X extends JsonMapper<ParentModel> {
     @Override
-    public PrePostProcessingModel parse(JsonParser jsonParser) throws IOException {
-        PrePostProcessingModel instance = new PrePostProcessingModel();
+    public ParentModel parse(JsonParser jsonParser) throws IOException {
+        ParentModel instance = new ParentModel();
         if (jsonParser.getCurrentToken() == null) {
             jsonParser.nextToken();
         }
@@ -27,26 +27,22 @@ public final class PrePostProcessingModel$$JsonObjectMapper extends JsonMapper<P
             parseField(instance, fieldName, jsonParser);
             jsonParser.skipChildren();
         }
-        instance.onParseComplete();
         return instance;
     }
 
     @Override
-    public void parseField(PrePostProcessingModel instance, String fieldName, JsonParser jsonParser) throws IOException {
-        if ("unformatted_string".equals(fieldName)) {
-            instance.unformattedString = jsonParser.getValueAsString(null);
+    public void parseField(ParentModel instance, String fieldName, JsonParser jsonParser) throws IOException {
+        if ("parentTestInt".equals(fieldName)) {
+            instance.parentTestInt = jsonParser.getValueAsInt();
         }
     }
 
     @Override
-    public void serialize(PrePostProcessingModel object, JsonGenerator jsonGenerator, boolean writeStartAndEnd) throws IOException {
-        object.onPreSerialize();
+    public void serialize(ParentModel object, JsonGenerator jsonGenerator, boolean writeStartAndEnd) throws IOException {
         if (writeStartAndEnd) {
             jsonGenerator.writeStartObject();
         }
-        if (object.unformattedString != null) {
-            jsonGenerator.writeStringField("unformatted_string", object.unformattedString);
-        }
+        jsonGenerator.writeNumberField("parentTestInt", object.parentTestInt);
         if (writeStartAndEnd) {
             jsonGenerator.writeEndObject();
         }

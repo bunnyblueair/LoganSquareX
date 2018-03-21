@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("unsafe,unchecked")
-public final class PrivateFieldModel$$JsonObjectMapper extends JsonMapper<PrivateFieldModel> {
+public final class PrivateFieldModel$$X extends JsonMapper<PrivateFieldModel> {
     @Override
     public PrivateFieldModel parse(JsonParser jsonParser) throws IOException {
         PrivateFieldModel instance = new PrivateFieldModel();
