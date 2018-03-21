@@ -35,6 +35,6 @@ public class NestedCollectionModelTest {
                 .processedWith(new JsonAnnotationProcessor())
                 .compilesWithoutError()
                 .and()
-                .generatesSources(JavaFileObjects.forResource("generated/NestedCollectionModel$$JsonObjectMapper.java"));
+                .generatesSources(JavaFileObjects.forResource("generated/NestedCollectionModel$$X.java"));
     }
 }

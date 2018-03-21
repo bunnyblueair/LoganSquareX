@@ -28,7 +28,7 @@ import java.lang.String;
 import java.lang.SuppressWarnings;
 
 @SuppressWarnings("unsafe,unchecked")
-public final class ExternalModel$$JsonObjectMapper extends JsonMapper<ExternalModelTest> {
+public final class ExternalModel$$X extends JsonMapper<ExternalModelTest> {
   @Override
   public ExternalModelTest parse(JsonParser jsonParser) throws IOException {
     ExternalModelTest instance = new ExternalModelTest();

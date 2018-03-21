@@ -35,6 +35,6 @@ public class SimpleCollectionModelTest {
                 .processedWith(new JsonAnnotationProcessor())
                 .compilesWithoutError()
                 .and()
-                .generatesSources(JavaFileObjects.forResource("generated/SimpleCollectionModel$$JsonObjectMapper.java"));
+                .generatesSources(JavaFileObjects.forResource("generated/SimpleCollectionModel$$X.java"));
     }
 }

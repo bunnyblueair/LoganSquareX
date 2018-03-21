@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List
 
 @SuppressWarnings("unsafe,unchecked")
-public final class NonPrivateFieldsAndAccessorsFieldDetectionPolicyModel$$JsonObjectMapper extends JsonMapper<NonPrivateFieldsAndAccessorsFieldDetectionPolicyModel> {
+public final class NonPrivateFieldsAndAccessorsFieldDetectionPolicyModel$$X extends JsonMapper<NonPrivateFieldsAndAccessorsFieldDetectionPolicyModel> {
     @Override
     public NonPrivateFieldsAndAccessorsFieldDetectionPolicyModel parse(JsonParser jsonParser) throws IOException {
         NonPrivateFieldsAndAccessorsFieldDetectionPolicyModel instance = new NonPrivateFieldsAndAccessorsFieldDetectionPolicyModel();

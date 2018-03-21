@@ -35,6 +35,6 @@ public class LowerCaseNamingPolicyTest {
                 .processedWith(new JsonAnnotationProcessor())
                 .compilesWithoutError()
                 .and()
-                .generatesSources(JavaFileObjects.forResource("generated/LowerCaseNamingPolicyModel$$JsonObjectMapper.java"));
+                .generatesSources(JavaFileObjects.forResource("generated/LowerCaseNamingPolicyModel$$X.java"));
     }
 }

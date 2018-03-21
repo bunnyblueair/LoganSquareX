@@ -36,6 +36,6 @@ public class SimpleGenericModelTest {
                 .processedWith(new JsonAnnotationProcessor())
                 .compilesWithoutError()
                 .and()
-                .generatesSources(JavaFileObjects.forResource("generated/SimpleGenericModel$$JsonObjectMapper.java"));
+                .generatesSources(JavaFileObjects.forResource("generated/SimpleGenericModel$$X.java"));
     }
 }

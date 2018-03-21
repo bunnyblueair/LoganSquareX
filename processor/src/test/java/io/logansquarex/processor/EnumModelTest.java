@@ -35,6 +35,6 @@ public class EnumModelTest {
                 .processedWith(new JsonAnnotationProcessor())
                 .compilesWithoutError()
                 .and()
-                .generatesSources(JavaFileObjects.forResource("generated/EnumModel$$JsonObjectMapper.java"));
+                .generatesSources(JavaFileObjects.forResource("generated/EnumModel$$X.java"));
     }
 }

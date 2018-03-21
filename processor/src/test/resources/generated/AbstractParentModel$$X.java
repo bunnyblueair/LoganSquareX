@@ -11,7 +11,7 @@ import java.lang.SuppressWarnings;
 
 
 @SuppressWarnings("unsafe,unchecked")
-public final class AbstractParentModel$$JsonObjectMapper extends JsonMapper<AbstractParentModel> {
+public final class AbstractParentModel$$X extends JsonMapper<AbstractParentModel> {
     @Override
     public AbstractParentModel parse(JsonParser jsonParser) throws IOException {
         return null;

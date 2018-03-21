@@ -9,7 +9,7 @@ import java.lang.String;
 import java.lang.SuppressWarnings;
 
 @SuppressWarnings("unsafe,unchecked")
-public final class EnumModel$$JsonObjectMapper extends JsonMapper<EnumModel> {
+public final class EnumModel$$X extends JsonMapper<EnumModel> {
     protected static final EnumModel.EnumTypeConverter IO_LOGANSQUAREX_PROCESSOR_ENUMMODEL_ENUMTYPECONVERTER = new EnumModel.EnumTypeConverter();
 
     @Override

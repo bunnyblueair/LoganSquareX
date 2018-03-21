@@ -35,6 +35,6 @@ public class WhitespaceFieldNameModelTest {
                 .processedWith(new JsonAnnotationProcessor())
                 .compilesWithoutError()
                 .and()
-                .generatesSources(JavaFileObjects.forResource("generated/WhitespaceFieldNameModel$$JsonObjectMapper.java"));
+                .generatesSources(JavaFileObjects.forResource("generated/WhitespaceFieldNameModel$$X.java"));
     }
 }

@@ -35,6 +35,6 @@ public class PrivateFieldModelTest {
                 .processedWith(new JsonAnnotationProcessor())
                 .compilesWithoutError()
                 .and()
-                .generatesSources(JavaFileObjects.forResource("generated/PrivateFieldModel$$JsonObjectMapper.java"));
+                .generatesSources(JavaFileObjects.forResource("generated/PrivateFieldModel$$X.java"));
     }
 }

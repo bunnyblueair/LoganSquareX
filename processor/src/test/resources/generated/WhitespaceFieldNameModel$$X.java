@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 @SuppressWarnings("unsafe,unchecked")
-public final class WhitespaceFieldNameModel$$JsonObjectMapper extends JsonMapper<WhitespaceFieldNameModel> {
+public final class WhitespaceFieldNameModel$$X extends JsonMapper<WhitespaceFieldNameModel> {
   @Override
   public WhitespaceFieldNameModel parse(JsonParser jsonParser) throws IOException {
     WhitespaceFieldNameModel instance = new WhitespaceFieldNameModel();

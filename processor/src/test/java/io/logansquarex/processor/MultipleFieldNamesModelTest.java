@@ -35,6 +35,6 @@ public class MultipleFieldNamesModelTest {
                 .processedWith(new JsonAnnotationProcessor())
                 .compilesWithoutError()
                 .and()
-                .generatesSources(JavaFileObjects.forResource("generated/MultipleFieldNamesModel$$JsonObjectMapper.java"));
+                .generatesSources(JavaFileObjects.forResource("generated/MultipleFieldNamesModel$$X.java"));
     }
 }

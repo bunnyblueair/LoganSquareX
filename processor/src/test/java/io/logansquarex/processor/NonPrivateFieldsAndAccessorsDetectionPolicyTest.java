@@ -35,6 +35,6 @@ public class NonPrivateFieldsAndAccessorsDetectionPolicyTest {
                 .processedWith(new JsonAnnotationProcessor())
                 .compilesWithoutError()
                 .and()
-                .generatesSources(JavaFileObjects.forResource("generated/NonPrivateFieldsAndAccessorsFieldDetectionPolicyModel$$JsonObjectMapper.java"));
+                .generatesSources(JavaFileObjects.forResource("generated/NonPrivateFieldsAndAccessorsFieldDetectionPolicyModel$$X.java"));
     }
 }
