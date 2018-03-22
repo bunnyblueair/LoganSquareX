@@ -18,9 +18,11 @@
 
 package io.logansquarex.processor;
 
+import io.logansquarex.core.Constants;
 import io.logansquarex.core.LoganSquare;
 import io.logansquarex.core.LoganSquareX;
 import io.logansquarex.core.ParameterizedType;
+import io.logansquarex.core.annotation.XBuildConfig;
 import io.logansquarex.processor.model.EnumListModel;
 import io.logansquarex.processor.model.EnumListModel.LsEnumTestConverter;
 import io.logansquarex.processor.model.EnumListModel.TestEnum;
@@ -47,7 +49,7 @@ import java.util.TreeMap;
 import java.util.UUID;
 
 import static com.google.common.truth.Truth.ASSERT;
-
+@XBuildConfig(targetPkg = Constants.LOADER_PACKAGE_NAME,targetClass = Constants.LOADER_CLASS_NAME,autoMerge = true)
 public class RoundTripTests {
 
     @Test
@@ -95,8 +97,8 @@ public class RoundTripTests {
 
         String reserialized = null;
         try {
-            List<Boolean> list = LoganSquare.parseList(json, Boolean.class);
-            reserialized = LoganSquare.serialize(list, Boolean.class);
+            List<Boolean> list = LoganSquareX.parseList(json, Boolean.class);
+            reserialized = LoganSquareX.serialize(list, Boolean.class);
         } catch (Exception ignored) { }
 
         ASSERT.that(json.equals(reserialized)).isTrue();

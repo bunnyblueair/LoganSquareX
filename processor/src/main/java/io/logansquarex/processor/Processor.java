@@ -44,6 +44,8 @@ public abstract class Processor {
 
     public static List<Processor> allProcessors(ProcessingEnvironment processingEnvironment) {
         List<Processor> list = new ArrayList<>();
+        list.add(new PackageProcessor(processingEnvironment));
+        list.add(new PackageMergeProcessor(processingEnvironment));
         list.add(new JsonObjectProcessor(processingEnvironment));
         list.add(new OnJsonParseCompleteProcessor(processingEnvironment));
         list.add(new OnPreSerializeProcessor(processingEnvironment));

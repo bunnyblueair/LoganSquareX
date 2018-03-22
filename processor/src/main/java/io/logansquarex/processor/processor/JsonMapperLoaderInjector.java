@@ -19,7 +19,9 @@
 package io.logansquarex.processor.processor;
 
 
+import com.squareup.javapoet.AnnotationSpec;
 import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.CodeBlock;
 import com.squareup.javapoet.FieldSpec;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -40,6 +42,9 @@ import io.logansquarex.core.Constants;
 import io.logansquarex.core.JsonMapper;
 import io.logansquarex.core.JsonMapperLoader;
 import io.logansquarex.core.ParameterizedType;
+import io.logansquarex.core.annotation.XBuildConfig;
+import io.logansquarex.core.annotation.XHide;
+
 import io.logansquarex.core.objectmappers.BooleanMapper;
 import io.logansquarex.core.objectmappers.DoubleMapper;
 import io.logansquarex.core.objectmappers.FloatMapper;
@@ -52,12 +57,16 @@ import io.logansquarex.core.objectmappers.StringMapper;
 import io.logansquarex.core.util.SimpleArrayMap;
 
 public class JsonMapperLoaderInjector {
+    HashMap<String, String> mapperMergers;
+    public JsonMapperLoaderInjector(Collection<JsonObjectHolder> mJsonObjectHolders, XBuildConfig buildPackage, HashMap<String, String> mapperMergers) {
+        this.mJsonObjectHolders = mJsonObjectHolders;
+        this.buildPackage = buildPackage;
+        this.mapperMergers=mapperMergers;
+    }
 
     private final Collection<JsonObjectHolder> mJsonObjectHolders;
+    private final XBuildConfig buildPackage;
 
-    public JsonMapperLoaderInjector(Collection<JsonObjectHolder> jsonObjectHolders) {
-        mJsonObjectHolders = jsonObjectHolders;
-    }
 
     public String getJavaClassFile() {
         try {
@@ -69,16 +78,23 @@ public class JsonMapperLoaderInjector {
     }
 
     private TypeSpec getTypeSpec() {
-        TypeSpec.Builder builder = TypeSpec.classBuilder(Constants.LOADER_CLASS_NAME).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
+        TypeSpec.Builder builder = TypeSpec.classBuilder(buildPackage.targetClass()).addModifiers(Modifier.PUBLIC, Modifier.FINAL);
         builder.addSuperinterface(ClassName.get(JsonMapperLoader.class));
-
-   //     addAllBuiltInMappers(builder);
+        // XHide autoList=new XHide();
+        if (!buildPackage.autoMerge()) {
+//            AnnotationSpec annotationSpec = AnnotationSpec.builder(XHideCl.class).build();
+//            builder.addAnnotation(annotationSpec);
+        }
+        //     addAllBuiltInMappers(builder);
         builder.addMethod(getPutAllJsonMappersMethodEmpty(builder));
 
         addParameterizedMapperGetters(builder);
-        addDefaultSize(builder);
-        builder.addMethod(getPutAllJsoClassMappersMethod(builder));
+        if (!buildPackage.autoMerge()) {
+          //  getAllFiledsAutoMergeAble(builder);
+        }
 
+        builder.addMethod(getPutAllJsoClassMappersMethod(builder,buildPackage));
+        addDefaultSize(builder);
         return builder.build();
     }
 
@@ -103,9 +119,9 @@ public class JsonMapperLoaderInjector {
     }
 
     private void addDefaultSize(TypeSpec.Builder typeSpecBuilder) {
-        typeSpecBuilder.addField(FieldSpec.builder(int.class,"DEFAULT_MAP_SIZE")
+        typeSpecBuilder.addField(FieldSpec.builder(int.class, "DEFAULT_MAP_SIZE")
                 .addModifiers(Modifier.PUBLIC, Modifier.STATIC, Modifier.FINAL)
-                .initializer(mJsonObjectHolders.size()+"")
+                .initializer(mJsonObjectHolders.size() + "")
                 .build()
         );
     }
@@ -114,8 +130,7 @@ public class JsonMapperLoaderInjector {
         MethodSpec.Builder builder = MethodSpec.methodBuilder("putAllJsonMappers")
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC)
-                .addParameter(ParameterizedTypeName.get(ClassName.get(SimpleArrayMap.class), ClassName.get(Class.class), ClassName.get(JsonMapper.class)), "map")
-               ;
+                .addParameter(ParameterizedTypeName.get(ClassName.get(SimpleArrayMap.class), ClassName.get(Class.class), ClassName.get(JsonMapper.class)), "map");
 
 //        List<String> createdMappers = new ArrayList<>();
 //        for (JsonObjectHolder jsonObjectHolder : mJsonObjectHolders) {
@@ -143,6 +158,7 @@ public class JsonMapperLoaderInjector {
 
         return builder.build();
     }
+
     private MethodSpec getPutAllJsonMappersMethod(TypeSpec.Builder typeSpecBuilder) {
         MethodSpec.Builder builder = MethodSpec.methodBuilder("putAllJsonMappers")
                 .addAnnotation(Override.class)
@@ -186,24 +202,13 @@ public class JsonMapperLoaderInjector {
 
         return builder.build();
     }
-    private MethodSpec getPutAllJsoClassMappersMethod(TypeSpec.Builder typeSpecBuilder) {
+
+    private MethodSpec getPutAllJsoClassMappersMethod(TypeSpec.Builder typeSpecBuilder,XBuildConfig config) {
         MethodSpec.Builder builder = MethodSpec.methodBuilder("retainAllClassMapper")
                 .addAnnotation(Override.class)
                 .addModifiers(Modifier.PUBLIC)
                 .addParameter(ParameterizedTypeName.get(ClassName.get(SimpleArrayMap.class), ClassName.get(Class.class), ClassName.get(Class.class)), "map");
-//                .addStatement("map.put($T.class, $L)", String.class, getMapperVariableName(StringMapper.class))
-//                .addStatement("map.put($T.class, $L)", Integer.class, getMapperVariableName(IntegerMapper.class))
-//                .addStatement("map.put($T.class, $L)", Long.class, getMapperVariableName(LongMapper.class))
-//                .addStatement("map.put($T.class, $L)", Float.class, getMapperVariableName(FloatMapper.class))
-//                .addStatement("map.put($T.class, $L)", Double.class, getMapperVariableName(DoubleMapper.class))
-//                .addStatement("map.put($T.class, $L)", Boolean.class, getMapperVariableName(BooleanMapper.class))
-//                .addStatement("map.put($T.class, $L)", Object.class, getMapperVariableName(ObjectMapper.class))
-//                .addStatement("map.put($T.class, $L)", List.class, getMapperVariableName(ListMapper.class))
-//                .addStatement("map.put($T.class, $L)", ArrayList.class, getMapperVariableName(ListMapper.class))
-//                .addStatement("map.put($T.class, $L)", Map.class, getMapperVariableName(MapMapper.class))
-//                .addStatement("map.put($T.class, $L)", HashMap.class, getMapperVariableName(MapMapper.class));
 
-      //  List<String> createdMappers = new ArrayList<>();
         for (JsonObjectHolder jsonObjectHolder : mJsonObjectHolders) {
             if (jsonObjectHolder.typeParameters.size() == 0) {
                 TypeName mapperTypeName = ClassName.get(jsonObjectHolder.packageName, jsonObjectHolder.injectedClassName);
@@ -222,13 +227,60 @@ public class JsonMapperLoaderInjector {
                 }
             }
         }
+        if (buildPackage.autoMerge()&&!mapperMergers.isEmpty()){
+            for (Map.Entry<String, String> entry : mapperMergers.entrySet()) {
+                builder.addStatement("map.put($T.class, $T.class)", entry.getValue(), entry.getKey());
+            }
+          // while ()
 
+        }else {
+           // System.err.println(buildPackage.autoMerge()+"=====not found=="+mapperMergers.size());
+        }
+        for (String cf:config.configList()){;
+           builder.addStatement("new "+cf+"().retainAllClassMapper(map)");
+
+        }
 //        for (String mapper : createdMappers) {
 //            builder.addStatement("$L.ensureParent()", mapper);
 //        }
 
         return builder.build();
     }
+
+    private void getAllFiledsAutoMergeAble(TypeSpec.Builder typeSpecBuilder) {
+
+        AnnotationSpec annotationSpec = AnnotationSpec.builder(XHide.class).build();
+       // builder.addAnnotation(annotationSpec);
+        List<String> createdMappers = new ArrayList<>();
+        for (JsonObjectHolder jsonObjectHolder : mJsonObjectHolders) {
+            if (jsonObjectHolder.typeParameters.size() == 0) {
+                TypeName mapperTypeName = ClassName.get("java.lang", "String");//ClassName.get(jsonObjectHolder.packageName, jsonObjectHolder.injectedClassName);
+                String variableName = getMapperVariableName(jsonObjectHolder.packageName + "." + jsonObjectHolder.injectedClassName);
+                if (createdMappers.contains(variableName)) {
+                   // continue;
+                }
+              //  if ()
+                String val=jsonObjectHolder.packageName + "." + jsonObjectHolder.injectedClassName;
+               // System.err.println("val="+val );
+                typeSpecBuilder.addField(FieldSpec.builder(mapperTypeName, variableName).initializer(CodeBlock.of("\""+val+"\""))//.initializer("\"" + jsonObjectHolder.packageName + "." + jsonObjectHolder.injectedClassName + "\"")
+                        .addModifiers(Modifier.PRIVATE, Modifier.STATIC,Modifier.FINAL).addAnnotation(annotationSpec)
+                        .build()
+                );
+
+                createdMappers.add(variableName);
+                //typeSpecBuilder.addStatement("$L = new $T()", variableName, mapperTypeName);
+
+
+            }
+        }
+
+//        for (String mapper : createdMappers) {
+//            builder.addStatement("$L.ensureParent()", mapper);
+//        }
+
+        //    return builder.build();
+    }
+
     private void addParameterizedMapperGetters(TypeSpec.Builder builder) {
         MethodSpec.Builder methodBuilder = MethodSpec.methodBuilder("mapperFor")
                 .addAnnotation(Override.class)
@@ -238,37 +290,37 @@ public class JsonMapperLoaderInjector {
                 .addParameter(ParameterizedTypeName.get(ClassName.get(ParameterizedType.class), TypeVariableName.get("T")), "type")
                 .addParameter(ParameterizedTypeName.get(ClassName.get(SimpleArrayMap.class), ClassName.get(ParameterizedType.class), ClassName.get(JsonMapper.class)), "partialMappers");
 
-        boolean conditionalStarted = false;
-        for (JsonObjectHolder jsonObjectHolder : mJsonObjectHolders) {
-            if (jsonObjectHolder.typeParameters.size() > 0) {
-                String conditional = String.format("if (type.rawType == %s.class)", jsonObjectHolder.objectTypeName.toString().replaceAll("<(.*?)>", ""));
-                if (conditionalStarted) {
-                    methodBuilder.nextControlFlow("else " + conditional);
-                } else {
-                    conditionalStarted = true;
-                    methodBuilder.beginControlFlow(conditional);
-                }
-
-                methodBuilder.beginControlFlow("if (type.typeParameters.size() == $L)", jsonObjectHolder.typeParameters.size());
-
-                StringBuilder constructorArgs = new StringBuilder();
-                for (int i = 0; i < jsonObjectHolder.typeParameters.size(); i++) {
-                    constructorArgs.append(", type.typeParameters.get(").append(i).append(")");
-                }
-                methodBuilder.addStatement("return new $T(type" + constructorArgs.toString() + ", partialMappers)", ClassName.get(jsonObjectHolder.packageName, jsonObjectHolder.injectedClassName));
-
-                methodBuilder.nextControlFlow("else");
-                methodBuilder.addStatement(
-                        "throw new $T(\"Invalid number of parameter types. Type $T expects $L parameter types, received \" + type.typeParameters.size())",
-                        RuntimeException.class, jsonObjectHolder.objectTypeName, jsonObjectHolder.typeParameters.size()
-                );
-                methodBuilder.endControlFlow();
-            }
-        }
-
-        if (conditionalStarted) {
-            methodBuilder.endControlFlow();
-        }
+//        boolean conditionalStarted = false;
+//        for (JsonObjectHolder jsonObjectHolder : mJsonObjectHolders) {
+//            if (jsonObjectHolder.typeParameters.size() > 0) {
+//                String conditional = String.format("if (type.rawType == %s.class)", jsonObjectHolder.objectTypeName.toString().replaceAll("<(.*?)>", ""));
+//                if (conditionalStarted) {
+//                    methodBuilder.nextControlFlow("else " + conditional);
+//                } else {
+//                    conditionalStarted = true;
+//                    methodBuilder.beginControlFlow(conditional);
+//                }
+//
+//                methodBuilder.beginControlFlow("if (type.typeParameters.size() == $L)", jsonObjectHolder.typeParameters.size());
+//
+//                StringBuilder constructorArgs = new StringBuilder();
+//                for (int i = 0; i < jsonObjectHolder.typeParameters.size(); i++) {
+//                    constructorArgs.append(", type.typeParameters.get(").append(i).append(")");
+//                }
+//                methodBuilder.addStatement("return new $T(type" + constructorArgs.toString() + ", partialMappers)", ClassName.get(jsonObjectHolder.packageName, jsonObjectHolder.injectedClassName));
+//
+//                methodBuilder.nextControlFlow("else");
+//                methodBuilder.addStatement(
+//                        "throw new $T(\"Invalid number of parameter types. Type $T expects $L parameter types, received \" + type.typeParameters.size())",
+//                        RuntimeException.class, jsonObjectHolder.objectTypeName, jsonObjectHolder.typeParameters.size()
+//                );
+//                methodBuilder.endControlFlow();
+//            }
+//        }
+//
+//        if (conditionalStarted) {
+//            methodBuilder.endControlFlow();
+//        }
 
         methodBuilder.addStatement("return null");
 

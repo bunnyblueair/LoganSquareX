@@ -19,6 +19,10 @@
 package io.logansquarex.processor.processor;
 
 import io.logansquarex.core.Constants;
+import io.logansquarex.core.annotation.XBuildConfig;
+
+import io.logansquarex.processor.PackageMergeProcessor;
+import io.logansquarex.processor.PackageProcessor;
 import io.logansquarex.processor.Processor;
 
 import java.io.IOException;
@@ -72,22 +76,34 @@ public class JsonAnnotationProcessor extends AbstractProcessor {
 
     @Override
     public SourceVersion getSupportedSourceVersion() {
-        return SourceVersion.latestSupported();
+        return SourceVersion.RELEASE_8;
     }
 
     @Override
     public boolean process(Set<? extends TypeElement> elements, RoundEnvironment env) {
         try {
+            XBuildConfig buildPackage=null;
+            HashMap<String,String>  mapperMergers=new HashMap<>();
             for (Processor processor : mProcessors) {
                 processor.findAndParseObjects(env, mJsonObjectMap, mElementUtils, mTypeUtils);
+                if (processor instanceof PackageProcessor ){
+                    PackageProcessor packageProcessor= (PackageProcessor) processor;
+
+                    buildPackage=packageProcessor.getBuildPackage();
+                }else if (processor instanceof PackageMergeProcessor){
+                    PackageMergeProcessor packageMergeProcessor= (PackageMergeProcessor) processor;
+
+                    mapperMergers.putAll(packageMergeProcessor.getClassMapper());
+                }
             }
 
             if (!mLoaderWritten) {
                 mLoaderWritten = true;
 
-                final JsonMapperLoaderInjector loaderInjector = new JsonMapperLoaderInjector(mJsonObjectMap.values());
+                final JsonMapperLoaderInjector loaderInjector = new JsonMapperLoaderInjector(mJsonObjectMap.values(),buildPackage,mapperMergers);
                 try {
-                    JavaFileObject jfo = mFiler.createSourceFile(Constants.LOADER_PACKAGE_NAME + "." + Constants.LOADER_CLASS_NAME);
+                    JavaFileObject jfo = mFiler.createSourceFile(buildPackage.targetPkg()+"."+buildPackage.targetClass());
+
                     Writer writer = jfo.openWriter();
                     writer.write(loaderInjector.getJavaClassFile());
                     writer.flush();

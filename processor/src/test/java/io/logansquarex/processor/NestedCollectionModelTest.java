@@ -25,7 +25,7 @@ import io.logansquarex.processor.processor.JsonAnnotationProcessor;
 
 import static com.google.common.truth.Truth.ASSERT;
 import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
-
+//@XBuildConfig(targetPkg = Constants.LOADER_PACKAGE_NAME,targetClass = "Test",autoMerge = false)
 public class NestedCollectionModelTest {
 
     @Test

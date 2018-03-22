@@ -10,6 +10,7 @@ import java.util.List;
 
 import io.logansquarex.core.LoganSquare;
 import io.logansquarex.core.LoganSquareX;
+import io.logansquarex.demo.androidlib.LibBean;
 import io.logansquarex.demo.model.HelloBean;
 import io.logansquarex.demo.model.HelloList;
 
@@ -31,6 +32,8 @@ public class TextActivity extends Activity {
             e.printStackTrace();
         }
         Log.e("debug", LoganSquareX.serializeListSimple(list));
-
+        LibBean li=new LibBean();
+        li.setData("libtest");
+        Log.e("debug", LoganSquareX.serialize(li));
     }
 }
