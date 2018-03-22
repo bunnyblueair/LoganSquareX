@@ -22,11 +22,13 @@ import com.google.testing.compile.JavaFileObjects;
 
 import org.junit.Test;
 
+import io.logansquarex.core.Constants;
+import io.logansquarex.core.annotation.XBuildConfig;
 import io.logansquarex.processor.processor.JsonAnnotationProcessor;
 
 import static com.google.common.truth.Truth.ASSERT;
 import static com.google.testing.compile.JavaSourceSubjectFactory.javaSource;
-
+@XBuildConfig(targetPkg = Constants.LOADER_PACKAGE_NAME,targetClass = Constants.LOADER_CLASS_NAME,autoMerge = true)
 public class SimpleGenericExtendsStringModelTest {
 
     @Test

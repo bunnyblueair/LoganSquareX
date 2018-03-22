@@ -1,0 +1,77 @@
+/*
+ * Copyright 2018 LoganSquareX
+ *
+ * Copyright 2015 BlueLine Labs, Inc.
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+buildscript {
+    repositories {
+        jcenter()
+        google()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
+    }
+}
+apply plugin: 'com.android.library'
+import com.android.builder.Version
+
+
+int androidBuildToolVersion() {
+
+    def versionNumber = VersionNumber.parse(Version.ANDROID_GRADLE_PLUGIN_VERSION);
+    return versionNumber.getMajor()
+}
+
+
+if (androidBuildToolVersion() == 2) {
+    apply plugin: 'com.neenbedankt.android-apt'
+}
+
+android {
+    compileSdkVersion 26
+
+
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    if (androidBuildToolVersion() == 3) {
+        annotationProcessor project(":processor")
+    } else {
+        apt project(":processor")
+    }
+    // LoganSquare runtime library
+    compile project(':core')
+
+}

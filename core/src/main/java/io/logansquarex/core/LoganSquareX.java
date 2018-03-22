@@ -60,15 +60,16 @@ public class LoganSquareX {
 
     protected static final SimpleArrayMap<Class, JsonMapper> OBJECT_MAPPERS = new SimpleArrayMap<Class, JsonMapper>(JsonMapperLoaderImpl.DEFAULT_MAP_SIZE);
     protected static final SimpleArrayMap<Class, Class> CLASS_MAPPERS = new SimpleArrayMap<Class, Class>(JsonMapperLoaderImpl.DEFAULT_MAP_SIZE);
+
     static {
         try {
             JsonMapperLoaderImpl JSON_MAPPER_LOADER;
             JSON_MAPPER_LOADER = new JsonMapperLoaderImpl();
-           // JSON_MAPPER_LOADER.putAllJsonMappers(OBJECT_MAPPERS);
+            // JSON_MAPPER_LOADER.putAllJsonMappers(OBJECT_MAPPERS);
             JSON_MAPPER_LOADER.retainAllClassMapper(CLASS_MAPPERS);
         } catch (Exception e) {
             e.printStackTrace();
-       //  throw new RuntimeException("JsonMapperLoaderImpl class not found");
+            //  throw new RuntimeException("JsonMapperLoaderImpl class not found");
         }
         OBJECT_MAPPERS.put(String.class, new StringMapper());
         OBJECT_MAPPERS.put(Integer.class, new IntegerMapper());
@@ -93,6 +94,9 @@ public class LoganSquareX {
         registerTypeConverter(Calendar.class, new DefaultCalendarConverter());
     }
 
+    public static void registerMapper(JsonMapperLoader mapperLoader) {
+        mapperLoader.retainAllClassMapper(CLASS_MAPPERS);
+    }
 
 
     /**
@@ -338,17 +342,17 @@ public class LoganSquareX {
     /*package*/ static <E> JsonMapper<E> getMapper(Class<E> cls) {
         JsonMapper<E> mapper = OBJECT_MAPPERS.get(cls);
         if (mapper == null) {
-            Class<?> mapperClass= CLASS_MAPPERS.get(cls);
+            Class<?> mapperClass = CLASS_MAPPERS.get(cls);
             // The only way the mapper wouldn't already be loaded into OBJECT_MAPPERS is if it was compiled separately, but let's handle it anyway
             try {
-                if (mapperClass==null)
-                {
+                if (mapperClass == null) {
 
-                  mapperClass = Class.forName(cls.getName() + Constants.MAPPER_CLASS_SUFFIX);
+                    mapperClass = Class.forName(cls.getName() + Constants.MAPPER_CLASS_SUFFIX);
                 }
                 mapper = (JsonMapper<E>) mapperClass.newInstance();
                 OBJECT_MAPPERS.put(cls, mapper);
             } catch (Exception ignored) {
+                ignored.printStackTrace();
             }
         }
         return mapper;

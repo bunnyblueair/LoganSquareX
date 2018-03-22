@@ -19,8 +19,8 @@ dependencies {
     compile 'com.squareup:javapoet:1.8.0'
     compile project(':core')
 
-    testCompile files("${System.properties['java.home']}/../lib/tools.jar")
-    testCompile 'junit:junit:4.12'
-    testCompile 'com.google.testing.compile:compile-testing:0.6'
+     testCompile files("${System.properties['java.home']}/../lib/tools.jar")
+     testCompile 'junit:junit:4.12'
+     testCompile 'com.google.testing.compile:compile-testing:0.6'
 }
 apply from: "../dist.gradle"

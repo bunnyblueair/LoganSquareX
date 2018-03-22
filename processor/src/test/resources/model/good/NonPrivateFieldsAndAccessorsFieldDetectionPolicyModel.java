@@ -1,5 +1,7 @@
 package io.logansquarex.demo.model;
 
+import io.logansquarex.core.Constants;
+import io.logansquarex.core.annotation.XBuildConfig;
 import io.logansquarex.core.annotation.JsonField;
 import io.logansquarex.core.annotation.JsonIgnore;
 import io.logansquarex.core.annotation.JsonIgnore.IgnorePolicy;
@@ -7,7 +9,7 @@ import io.logansquarex.core.annotation.JsonObject;
 import io.logansquarex.core.annotation.JsonObject.FieldDetectionPolicy;
 
 import java.util.List;
-
+@XBuildConfig(targetPkg = Constants.LOADER_PACKAGE_NAME,targetClass = Constants.LOADER_CLASS_NAME,autoMerge = true)
 @JsonObject(fieldDetectionPolicy = FieldDetectionPolicy.NONPRIVATE_FIELDS_AND_ACCESSORS)
 public class NonPrivateFieldsAndAccessorsFieldDetectionPolicyModel {
 
