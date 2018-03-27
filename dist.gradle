@@ -36,21 +36,24 @@
                     def node = asNode()
                     node.appendNode('name', 'LoganSquareX')
                     node.appendNode('description', 'Screaming fast JSON parsing and serialization library for Android.')
-                    node.appendNode('url', 'https://github.com/LoganSquareX/LoganSquareX')
+                    node.appendNode('url', 'https://gitee.com/LoganSquareX/LoganSquareX')
 
                     def organizationNode = node.appendNode('organization')
                     organizationNode.appendNode('name', 'BLoganSquareX')
-                    organizationNode.appendNode('url', 'https://github.com/LoganSquareX')
+                    organizationNode.appendNode('url', 'https://gitee.com/LoganSquareX')
 
                     def scmNode = node.appendNode('scm')
-                    scmNode.appendNode('connection', 'scm:git:https://github.com/LoganSquareX/LoganSquareX')
-                    scmNode.appendNode('developerConnection', 'scm:git:https://github.com/LoganSquareX/LoganSquareX')
-                    scmNode.appendNode('url', 'https://github.com/LoganSquareX/LoganSquareX')
+                    scmNode.appendNode('connection', 'scm:git:https://gitee.com/LoganSquareX/LoganSquareX')
+                    scmNode.appendNode('developerConnection', 'scm:git:https://gitee.com/LoganSquareX/LoganSquareX')
+                    scmNode.appendNode('url', 'https://gitee.com/LoganSquareX/LoganSquareX')
 
                     def developersNode = node.appendNode('developers')
-                    def ericNode = developersNode.appendNode('developer')
-                    ericNode.appendNode('id', 'bunnyblue')
-                    ericNode.appendNode('name', 'BunnyBlue')
+                    def bunny = developersNode.appendNode('developer')
+                    bunny.appendNode('id', 'bunnyblue')
+                    bunny.appendNode('name', 'BunnyBlue')
+                    def zq = developersNode.appendNode('developer')
+                    bunny.appendNode('id', 'ZQiang94')
+                    bunny.appendNode('name', 'ZQiang94')
 
                     def licensesNode = node.appendNode('licenses')
                     def licenseNode = licensesNode.appendNode('license')
@@ -81,9 +84,9 @@
             userOrg = 'logansquarex'
             name = project.ext.artifactId
             desc = 'Screaming fast JSON parsing and serialization library for Android.'
-            websiteUrl = 'https://github.com/LoganSquareX/LoganSquareX'
-            issueTrackerUrl = 'https://github.com/LoganSquareX/LoganSquareX/issues'
-            vcsUrl = 'https://github.com/LoganSquareX/LoganSquareX'
+            websiteUrl = 'https://gitee.com/LoganSquareX/LoganSquareX'
+            issueTrackerUrl = 'https://gitee.com/LoganSquareX/LoganSquareX/issues'
+            vcsUrl = 'https://gitee.com/LoganSquareX/LoganSquareX'
             licenses = ['Apache-2.0']
             labels = ['json', 'android', 'parser', 'serializer', 'jackson']
             publicDownloadNumbers = true
