@@ -52,8 +52,8 @@
                     bunny.appendNode('id', 'bunnyblue')
                     bunny.appendNode('name', 'BunnyBlue')
                     def zq = developersNode.appendNode('developer')
-                    bunny.appendNode('id', 'ZQiang94')
-                    bunny.appendNode('name', 'ZQiang94')
+                    zq.appendNode('id', 'ZQiang94')
+                    zq.appendNode('name', 'ZQiang94')
 
                     def licensesNode = node.appendNode('licenses')
                     def licenseNode = licensesNode.appendNode('license')
