@@ -72,6 +72,6 @@ dependencies {
         apt project(":processor")
     }
     // LoganSquare runtime library
-    compile project(':core')
+    implementation project(':core')
 
 }

@@ -63,15 +63,15 @@ dependencies {
         apt project(":processor")
     }
     // LoganSquare runtime library
-    compile project(':core')
+    implementation project(':core')
     // Jackson libraries for comparison
-    compile 'com.fasterxml.jackson.core:jackson-databind:2.9.4'
-    compile 'com.fasterxml.jackson.core:jackson-annotations:2.9.4'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.9.4'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.9.4'
     // GSON library for comparison
-    compile 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.google.code.gson:gson:2.8.2'
     // Moshi library for camparison
-    compile 'com.squareup.moshi:moshi:1.0.0'
-    compile 'com.android.support:appcompat-v7:25.3.1'
+    implementation 'com.squareup.moshi:moshi:1.0.0'
+    implementation 'com.android.support:appcompat-v7:25.3.1'
     implementation project(':androidlib')
 
 }
