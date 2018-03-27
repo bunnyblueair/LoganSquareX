@@ -21,12 +21,12 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.1.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 }
 apply plugin: 'com.android.library'
-import com.android.builder.Version
+import com.android.builder.model.Version
 
 
 int androidBuildToolVersion() {

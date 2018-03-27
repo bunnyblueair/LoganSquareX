@@ -4,7 +4,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.0.1'
+        classpath 'com.android.tools.build:gradle:3.1.0'
         classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
     }
 }
@@ -12,7 +12,7 @@ buildscript {
 apply plugin: 'com.android.application'
 
 
-import com.android.builder.Version
+import com.android.builder.model.Version
 
 
 int androidBuildToolVersion() {
@@ -28,7 +28,7 @@ if (androidBuildToolVersion() == 2) {
 
 android {
     compileSdkVersion 25
-    buildToolsVersion '26.0.2'
+    buildToolsVersion '27.0.3'
 
     packagingOptions {
         exclude 'META-INF/LICENSE'
