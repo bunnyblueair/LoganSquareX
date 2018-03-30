@@ -24,6 +24,6 @@ import io.logansquarex.core.annotation.XBuildConfig;
 /**
  * Created by bunnyblue on 3/21/18.
  */
-@XBuildConfig(targetPkg = Constants.LOADER_PACKAGE_NAME,targetClass = "JsonMapperLoaderImplStub")
+@XBuildConfig(targetClass = "JsonMapperLoaderImplStub")
 public class Config {
 }

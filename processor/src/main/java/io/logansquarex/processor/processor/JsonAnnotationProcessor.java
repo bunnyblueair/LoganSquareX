@@ -99,6 +99,11 @@ public class JsonAnnotationProcessor extends AbstractProcessor {
 
             if (!mLoaderWritten) {
                 mLoaderWritten = true;
+                if (!buildPackage.autoMerge()){
+                    if ((buildPackage.targetPkg()+"."+buildPackage.targetClass()).contentEquals(Constants.LOADER_PACKAGE_NAME+"."+Constants.LOADER_CLASS_NAME)){
+                        throw  new RuntimeException(String.format("can't use  %s in sub project",Constants.LOADER_CLASS_NAME));
+                    }
+                }
 
                 final JsonMapperLoaderInjector loaderInjector = new JsonMapperLoaderInjector(mJsonObjectMap.values(),buildPackage,mapperMergers);
                 try {

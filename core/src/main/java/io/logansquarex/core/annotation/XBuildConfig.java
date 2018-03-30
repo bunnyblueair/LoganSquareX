@@ -21,21 +21,24 @@ package io.logansquarex.core.annotation;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+import io.logansquarex.core.Constants;
+
 import static java.lang.annotation.ElementType.TYPE;
-import static java.lang.annotation.RetentionPolicy.CLASS;
+import static java.lang.annotation.RetentionPolicy.SOURCE;
 
 /**
  * 每个项目只允许定义一个配置
  * Created by bunnyblue on 3/21/18.
  */
 @Target(TYPE)
-@Retention(CLASS)
+@Retention(SOURCE)
 public @interface XBuildConfig {
-    String targetPkg() default "";
+    String targetPkg() default Constants.LOADER_PACKAGE_NAME;
 
-    String targetClass() default "";
+    String targetClass() default Constants.LOADER_CLASS_NAME;
 
     boolean autoMerge() default false;
+
     public String[] configList() default {};
 
 }
