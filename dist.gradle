@@ -36,16 +36,16 @@
                     def node = asNode()
                     node.appendNode('name', 'LoganSquareX')
                     node.appendNode('description', 'Screaming fast JSON parsing and serialization library for Android.')
-                    node.appendNode('url', 'https://github.com/LoganSquareX/LoganSquareX')
+                    node.appendNode('url', 'https://gitlab.com/LoganSquareX/LoganSquareX')
 
                     def organizationNode = node.appendNode('organization')
                     organizationNode.appendNode('name', 'BLoganSquareX')
-                    organizationNode.appendNode('url', 'https://github.com/LoganSquareX')
+                    organizationNode.appendNode('url', 'https://gitlab.com/LoganSquareX')
 
                     def scmNode = node.appendNode('scm')
-                    scmNode.appendNode('connection', 'scm:git:https://github.com/LoganSquareX/LoganSquareX')
-                    scmNode.appendNode('developerConnection', 'scm:git:https://github.com/LoganSquareX/LoganSquareX')
-                    scmNode.appendNode('url', 'https://github.com/LoganSquareX/LoganSquareX')
+                    scmNode.appendNode('connection', 'scm:git:https://gitlab.com/LoganSquareX/LoganSquareX')
+                    scmNode.appendNode('developerConnection', 'scm:git:https://gitlab.com/LoganSquareX/LoganSquareX')
+                    scmNode.appendNode('url', 'https://gitlab.com/LoganSquareX/LoganSquareX')
 
                     def developersNode = node.appendNode('developers')
                     def ericNode = developersNode.appendNode('developer')
@@ -81,9 +81,9 @@
             userOrg = 'logansquarex'
             name = project.ext.artifactId
             desc = 'Screaming fast JSON parsing and serialization library for Android.'
-            websiteUrl = 'https://github.com/LoganSquareX/LoganSquareX'
-            issueTrackerUrl = 'https://github.com/LoganSquareX/LoganSquareX/issues'
-            vcsUrl = 'https://github.com/LoganSquareX/LoganSquareX'
+            websiteUrl = 'https://gitlab.com/LoganSquareX/LoganSquareX'
+            issueTrackerUrl = 'https://gitlab.com/LoganSquareX/LoganSquareX/issues'
+            vcsUrl = 'https://gitlab.com/LoganSquareX/LoganSquareX'
             licenses = ['Apache-2.0']
             labels = ['json', 'android', 'parser', 'serializer', 'jackson']
             publicDownloadNumbers = true
