@@ -1,5 +1,7 @@
 package io.logansquarex.processor;
 
+import com.squareup.javapoet.ClassName;
+import com.squareup.javapoet.TypeName;
 import io.logansquarex.core.Constants;
 import io.logansquarex.core.annotation.JsonIgnore;
 import io.logansquarex.core.annotation.JsonIgnore.IgnorePolicy;
@@ -10,28 +12,17 @@ import io.logansquarex.processor.processor.JsonObjectHolder;
 import io.logansquarex.processor.processor.JsonObjectHolder.JsonObjectHolderBuilder;
 import io.logansquarex.processor.processor.TextUtils;
 import io.logansquarex.processor.processor.TypeUtils;
-import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.TypeName;
-
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.annotation.processing.RoundEnvironment;
-import javax.lang.model.element.Element;
-import javax.lang.model.element.ElementKind;
-import javax.lang.model.element.Modifier;
-import javax.lang.model.element.TypeElement;
-import javax.lang.model.element.TypeParameterElement;
+import javax.lang.model.element.*;
 import javax.lang.model.type.TypeKind;
 import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.*;
 
 import static javax.lang.model.element.Modifier.ABSTRACT;
 import static javax.lang.model.element.Modifier.PRIVATE;
@@ -62,7 +53,7 @@ public class JsonObjectProcessor extends Processor {
     }
 
     private void processJsonObjectAnnotation(Element element, Map<String, JsonObjectHolder> jsonObjectMap, Elements elements, Types types) {
-        TypeElement typeElement = (TypeElement)element;
+        TypeElement typeElement = (TypeElement) element;
 
         if (element.getModifiers().contains(PRIVATE)) {
             error(element, "%s: %s annotation can't be used on private classes.", typeElement.getQualifiedName(), JsonObject.class.getSimpleName());
@@ -80,7 +71,7 @@ public class JsonObjectProcessor extends Processor {
 
             TypeMirror superclass = typeElement.getSuperclass();
             if (superclass.getKind() != TypeKind.NONE) {
-                TypeElement superclassElement = (TypeElement)types.asElement(superclass);
+                TypeElement superclassElement = (TypeElement) types.asElement(superclass);
                 if (superclassElement.getAnnotation(JsonObject.class) != null) {
                     if (superclassElement.getTypeParameters() != null) {
                         parentTypeParameters = superclassElement.getTypeParameters();
@@ -95,7 +86,7 @@ public class JsonObjectProcessor extends Processor {
                 }
             }
             while (superclass.getKind() != TypeKind.NONE) {
-                TypeElement superclassElement = (TypeElement)types.asElement(superclass);
+                TypeElement superclassElement = (TypeElement) types.asElement(superclass);
 
                 if (superclassElement.getAnnotation(JsonObject.class) != null) {
                     String superclassPackageName = elements.getPackageOf(superclassElement).getQualifiedName().toString();
@@ -126,6 +117,8 @@ public class JsonObjectProcessor extends Processor {
             FieldDetectionPolicy fieldDetectionPolicy = annotation.fieldDetectionPolicy();
             if (fieldDetectionPolicy == FieldDetectionPolicy.NONPRIVATE_FIELDS || fieldDetectionPolicy == FieldDetectionPolicy.NONPRIVATE_FIELDS_AND_ACCESSORS) {
                 addAllNonPrivateFields(element, elements, types, holder);
+            } else if (fieldDetectionPolicy == FieldDetectionPolicy.LOMBOK_FIELDS_AND_ACCESSORS) {
+                addAlllombokPrivateFields(element, elements, types, holder);
             }
             if (fieldDetectionPolicy == FieldDetectionPolicy.NONPRIVATE_FIELDS_AND_ACCESSORS) {
                 addAllNonPrivateAccessors(element, elements, types, holder);
@@ -142,7 +135,21 @@ public class JsonObjectProcessor extends Processor {
             if (enclosedElementKind == ElementKind.FIELD) {
                 Set<Modifier> modifiers = enclosedElement.getModifiers();
                 if (!modifiers.contains(Modifier.PRIVATE) && !modifiers.contains(Modifier.PROTECTED) && !modifiers.contains(Modifier.TRANSIENT) && !modifiers.contains(Modifier.STATIC)) {
-                    createOrUpdateFieldHolder(enclosedElement, elements, types, objectHolder);
+                    createOrUpdateFieldHolder(enclosedElement, elements, types, objectHolder, false);
+                }
+            }
+        }
+    }
+
+    private void addAlllombokPrivateFields(Element element, Elements elements, Types types, JsonObjectHolder objectHolder) {
+        List<? extends Element> enclosedElements = element.getEnclosedElements();
+        for (Element enclosedElement : enclosedElements) {
+            ElementKind enclosedElementKind = enclosedElement.getKind();
+            if (enclosedElementKind == ElementKind.FIELD) {
+                Set<Modifier> modifiers = enclosedElement.getModifiers();
+                if (((modifiers.contains(Modifier.PRIVATE) || modifiers.contains(Modifier.PROTECTED)) && !modifiers.contains(Modifier.STATIC))) {
+                    createOrUpdateFieldHolder(enclosedElement, elements, types, objectHolder, true);
+
                 }
             }
         }
@@ -161,14 +168,14 @@ public class JsonObjectProcessor extends Processor {
                     String setter = JsonFieldHolder.getSetter(enclosedElement, elements);
 
                     if (!TextUtils.isEmpty(getter) && !TextUtils.isEmpty(setter)) {
-                        createOrUpdateFieldHolder(enclosedElement, elements, types, objectHolder);
+                        createOrUpdateFieldHolder(enclosedElement, elements, types, objectHolder, false);
                     }
                 }
             }
         }
     }
 
-    private void createOrUpdateFieldHolder(Element element, Elements elements, Types types, JsonObjectHolder objectHolder) {
+    private void createOrUpdateFieldHolder(Element element, Elements elements, Types types, JsonObjectHolder objectHolder, boolean lombok) {
         JsonIgnore ignoreAnnotation = element.getAnnotation(JsonIgnore.class);
         boolean shouldParse = ignoreAnnotation == null || ignoreAnnotation.ignorePolicy() == IgnorePolicy.SERIALIZE_ONLY;
         boolean shouldSerialize = ignoreAnnotation == null || ignoreAnnotation.ignorePolicy() == IgnorePolicy.PARSE_ONLY;
@@ -180,7 +187,9 @@ public class JsonObjectProcessor extends Processor {
                 objectHolder.fieldMap.put(element.getSimpleName().toString(), fieldHolder);
             }
 
-            String error = fieldHolder.fill(element, elements, types, null, null, objectHolder, shouldParse, shouldSerialize);
+            String error = fieldHolder.fill(element, elements, types, null, null, objectHolder, shouldParse, shouldSerialize
+                    , lombok);
+
             if (!TextUtils.isEmpty(error)) {
                 error(element, error);
             }

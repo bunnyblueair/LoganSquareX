@@ -85,7 +85,7 @@ public class JsonFieldProcessor extends Processor {
         boolean shouldParse = ignoreAnnotation == null || ignoreAnnotation.ignorePolicy() == IgnorePolicy.SERIALIZE_ONLY;
         boolean shouldSerialize = ignoreAnnotation == null || ignoreAnnotation.ignorePolicy() == IgnorePolicy.PARSE_ONLY;
 
-        String error = fieldHolder.fill(element, elements, types, fieldName, typeConverterType, objectHolder, shouldParse, shouldSerialize);
+        String error = fieldHolder.fill(element, elements, types, fieldName, typeConverterType, objectHolder, shouldParse, shouldSerialize, false);
         if (!TextUtils.isEmpty(error)) {
             error(element, error);
         }

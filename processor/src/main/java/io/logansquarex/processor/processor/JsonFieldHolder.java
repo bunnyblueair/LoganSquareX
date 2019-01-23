@@ -4,9 +4,6 @@ import io.logansquarex.processor.type.Type;
 import io.logansquarex.processor.type.collection.CollectionType;
 import io.logansquarex.processor.type.field.ParameterizedTypeField;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
@@ -15,6 +12,10 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.ElementFilter;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
+import java.util.ArrayList;
+import java.util.List;
+
+import static javax.lang.model.element.Modifier.PRIVATE;
 
 public class JsonFieldHolder {
 
@@ -25,7 +26,7 @@ public class JsonFieldHolder {
     public boolean shouldSerialize;
     public Type type;
 
-    public String fill(Element element, Elements elements, Types types, String[] fieldNames, TypeMirror typeConverterType, JsonObjectHolder objectHolder, boolean shouldParse, boolean shouldSerialize) {
+    public String fill(Element element, Elements elements, Types types, String[] fieldNames, TypeMirror typeConverterType, JsonObjectHolder objectHolder, boolean shouldParse, boolean shouldSerialize, boolean lombok) {
         if (fieldNames == null || fieldNames.length == 0) {
             String defaultFieldName = element.getSimpleName().toString();
 
@@ -35,15 +36,20 @@ public class JsonFieldHolder {
                     break;
             }
 
-            fieldNames = new String[] { defaultFieldName };
+            fieldNames = new String[]{defaultFieldName};
         }
         fieldName = fieldNames;
 
         this.shouldParse = shouldParse;
         this.shouldSerialize = shouldSerialize;
+        if (lombok && element.getModifiers().contains(PRIVATE)) {
+            getterMethod = getGetter(element);
+            setterMethod = getSetter(element);
+        } else {
+            getterMethod = getGetter(element, elements);
+            setterMethod = getSetter(element, elements);
+        }
 
-        setterMethod = getSetter(element, elements);
-        getterMethod = getGetter(element, elements);
 
         type = Type.typeFor(element.asType(), typeConverterType, elements, types);
         return ensureValidType(type, element);
@@ -110,6 +116,48 @@ public class JsonFieldHolder {
         }
 
         return null;
+    }
+
+    public static String getGetter(Element element) {
+        String methodName = null;
+        TypeElement enclosingElement = (TypeElement) element.getEnclosingElement();
+
+        String elementName = element.getSimpleName().toString();
+        String elementNameLowerCase = elementName.toLowerCase();
+
+        List<String> possibleMethodNames = new ArrayList<>();
+        methodName = "get" + (Character.isLowerCase(elementName.charAt(0)) ?
+                (Character.toUpperCase(elementName.charAt(0))) + elementNameLowerCase.substring(1) :
+                elementName.charAt(0) + elementNameLowerCase.substring(1));
+
+        // Handle the case where variables are named in the form mVariableName instead of just variableName
+        if (elementName.length() > 1 && elementName.charAt(0) == 'm' && (elementName.charAt(1) >= 'A' && elementName.charAt(1) <= 'Z')) {
+            methodName = "get" + elementNameLowerCase.substring(1);
+        }
+
+
+        return methodName;
+    }
+
+    public static String getSetter(Element element) {
+        String methodName = null;
+        TypeElement enclosingElement = (TypeElement) element.getEnclosingElement();
+
+        String elementName = element.getSimpleName().toString();
+        String elementNameLowerCase = elementName.toLowerCase();
+
+        List<String> possibleMethodNames = new ArrayList<>();
+        methodName = "set" + (Character.isLowerCase(elementName.charAt(0)) ?
+                (Character.toUpperCase(elementName.charAt(0))) + elementNameLowerCase.substring(1) :
+                elementName.charAt(0) + elementNameLowerCase.substring(1));
+
+        // Handle the case where variables are named in the form mVariableName instead of just variableName
+        if (elementName.length() > 1 && elementName.charAt(0) == 'm' && (elementName.charAt(1) >= 'A' && elementName.charAt(1) <= 'Z')) {
+            methodName = "set" + elementNameLowerCase.substring(1);
+        }
+
+
+        return methodName;
     }
 
     public static String getSetter(Element element, Elements elements) {

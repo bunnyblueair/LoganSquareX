@@ -33,7 +33,8 @@ public @interface JsonObject {
          * Parse and serialize all non-private fields and accessors that
          * haven't been annotated with @JsonIgnore.
          */
-        NONPRIVATE_FIELDS_AND_ACCESSORS
+        NONPRIVATE_FIELDS_AND_ACCESSORS,
+        LOMBOK_FIELDS_AND_ACCESSORS
     }
 
     public enum FieldNamingPolicy {
