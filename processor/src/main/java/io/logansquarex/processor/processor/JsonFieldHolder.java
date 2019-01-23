@@ -119,20 +119,20 @@ public class JsonFieldHolder {
     }
 
     public static String getGetter(Element element) {
-        String methodName = null;
+        String methodName = element.getSimpleName().toString();
         TypeElement enclosingElement = (TypeElement) element.getEnclosingElement();
 
         String elementName = element.getSimpleName().toString();
-        String elementNameLowerCase = elementName.toLowerCase();
+       // String elementNameLowerCase = elementName.toLowerCase();
 
         List<String> possibleMethodNames = new ArrayList<>();
         methodName = "get" + (Character.isLowerCase(elementName.charAt(0)) ?
-                (Character.toUpperCase(elementName.charAt(0))) + elementNameLowerCase.substring(1) :
-                elementName.charAt(0) + elementNameLowerCase.substring(1));
+                (Character.toUpperCase(elementName.charAt(0))) + methodName.substring(1) :
+                elementName.charAt(0) + methodName.substring(1));
 
         // Handle the case where variables are named in the form mVariableName instead of just variableName
         if (elementName.length() > 1 && elementName.charAt(0) == 'm' && (elementName.charAt(1) >= 'A' && elementName.charAt(1) <= 'Z')) {
-            methodName = "get" + elementNameLowerCase.substring(1);
+            methodName = "get" + methodName.substring(1);
         }
 
 
@@ -148,8 +148,8 @@ public class JsonFieldHolder {
 
         List<String> possibleMethodNames = new ArrayList<>();
         methodName = "set" + (Character.isLowerCase(elementName.charAt(0)) ?
-                (Character.toUpperCase(elementName.charAt(0))) + elementNameLowerCase.substring(1) :
-                elementName.charAt(0) + elementNameLowerCase.substring(1));
+                (Character.toUpperCase(elementName.charAt(0))) + elementName.substring(1) :
+                elementName.charAt(0) + elementName.substring(1));
 
         // Handle the case where variables are named in the form mVariableName instead of just variableName
         if (elementName.length() > 1 && elementName.charAt(0) == 'm' && (elementName.charAt(1) >= 'A' && elementName.charAt(1) <= 'Z')) {
